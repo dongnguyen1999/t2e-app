@@ -197,7 +197,7 @@ cryptocurrency.
 The TON Connect manifest used in this boilerplate is stored in the `public`
 folder, where all publicly accessible static files are located. Remember
 to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this
-file according to your project's information.
+file according to your project's information
 
 ## Useful Links
 

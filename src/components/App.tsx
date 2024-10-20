@@ -1,10 +1,12 @@
 import { useLaunchParams, miniApp, useSignal } from '@telegram-apps/sdk-react';
 import { AppRoot } from '@telegram-apps/telegram-ui';
-import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
-
-import { routes } from '@/navigation/routes.tsx';
+import { Navigate, Route, Routes, BrowserRouter } from 'react-router-dom';
 import theme from '@/themes/default';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import Layout from '@/pages/Layout';
+import Home from '@/pages/Home';
+import Missions from '@/pages/Missions';
+import Friends from '@/pages/Friends';
 
 export function App() {
   const lp = useLaunchParams();
@@ -17,12 +19,18 @@ export function App() {
     >
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        <HashRouter>
+        <BrowserRouter>
           <Routes>
-            {routes.map((route) => <Route key={route.path} {...route} />)}
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Navigate to="/home" />} />
+              <Route path="home" element={<Home />} />
+              <Route path="missions" element={<Missions />} />
+              <Route path="friends" element={<Friends />} />
+              <Route path="*" element={<Navigate to="/home" />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
-        </HashRouter>
+        </BrowserRouter>
       </ThemeProvider>;
     </AppRoot>
   );

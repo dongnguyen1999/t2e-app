@@ -16,7 +16,7 @@ interface StyledBottomNavigationActionProps {
 const StyledBottomNavigationAction = styled(BottomNavigationAction)<StyledBottomNavigationActionProps>(({ theme, selected }) => ({
   gap: 4,
   svg: {
-    fill: theme.palette.text.disabled,
+    fill: theme.palette.grey[600],
   },
   ...(selected && {
     '&::after': {

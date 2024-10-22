@@ -41,7 +41,10 @@ declare module '@mui/material/styles' {
     'caption-12-regular': React.CSSProperties;
     'button-14': React.CSSProperties;
     'link-14': React.CSSProperties;
-    'button-12': React.CSSProperties
+    'button-12': React.CSSProperties;
+    'caption-8-regular': React.CSSProperties;
+    'caption-8-medium': React.CSSProperties;
+    'caption-10-regular': React.CSSProperties;
   }
   interface TypographyVariantsOptions {
     'title-42-medium'?: React.CSSProperties
@@ -64,6 +67,9 @@ declare module '@mui/material/styles' {
     'button-14'?: React.CSSProperties
     'link-14'?: React.CSSProperties
     'button-12'?: React.CSSProperties
+    'caption-8-regular'?: React.CSSProperties
+    'caption-8-medium'?: React.CSSProperties
+    'caption-10-regular'?: React.CSSProperties
   }
 }
 
@@ -98,6 +104,9 @@ declare module '@mui/material/Typography' {
     'button-14': true;
     'link-14': true;
     'button-12': true;
+    'caption-8-regular': true;
+    'caption-8-medium': true;
+    'caption-10-regular': true;
   }
 }
 
@@ -112,6 +121,8 @@ const theme = responsiveFontSizes(createTheme({
     },
     error: {
       main: '#ff6a55',
+      dark: '#7D3030',
+      light: '#F9E9DF'
     },
     warning: {
       main: '#ffaf0f',
@@ -127,10 +138,26 @@ const theme = responsiveFontSizes(createTheme({
       paper: 'rgba(255, 255, 255, 0.60)',
       navbar: 'rgba(255, 255, 255, 0.80)',
     },
+    grey: {
+      50: '#fafafa',
+      100: '#f5f5f5',
+      200: '#eeeeee',
+      300: '#e0e0e0',
+      400: '#bdbdbd',
+      500: '#E1E1EA',
+      600: '#BCBCBC',
+      700: '#616161',
+      800: '#424242',
+      900: '#212121',
+      A100: '#f5f5f5',
+      A200: '#eeeeee',
+      A400: '#bdbdbd',
+      A700: '#616161',
+    },
     text: {
       primary: '#10061F',
       secondary: '#475569',
-      disabled: '#BCBCBC',
+      disabled: '#7F8EA4',
     },
   },
   typography: {
@@ -279,18 +306,29 @@ const theme = responsiveFontSizes(createTheme({
       fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: '16px', // 133.333%
+    },
+    'caption-8-regular': {
+      fontSize: '8px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: '12px', // 150%
+      letterSpacing: '-0.5px',
+    },
+    'caption-8-medium': {
+      fontSize: '8px',
+      fontStyle: 'normal',
+      fontWeight: 600,
+      lineHeight: 'normal',
+    },
+    'caption-10-regular': {
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: '14px', // 140%
+      letterSpacing: '-0.5px',
     }
   },
   spacing: (factor: number) => `${0.25 * factor}rem`,
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 6,
-        },
-      },
-    },
-  },
 }));
 
 export default theme;

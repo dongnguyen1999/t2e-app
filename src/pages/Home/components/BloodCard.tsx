@@ -13,6 +13,7 @@ const BloodCard: FC = () => {
       borderRadius={3}
       border={`2px solid ${theme.palette.common.white}`}
       bgcolor="background.paper"
+      height="100%"
     >
       <Typography variant="body-14-medium" color="text.primary" textAlign="center">
         Donation just started. Blood is being collected to save a life!</Typography>

@@ -8,7 +8,7 @@ import HourglassIcon from '@/assets/icons/icon-hourglass.svg?react';
 const BloodBagImage: FC = () => {
   return (<Stack direction="column" justifyContent="center"
     sx={{
-      height: 230,
+      flex: 1,
       borderRadius: 3,
       background: "linear-gradient(180deg, #CBCCD0 0%, #E7E7E7 54.5%, #E4E4E4 100%)",
       boxShadow: "0px 24px 48px 0px rgba(49, 79, 124, 0.08)",
@@ -22,7 +22,7 @@ const BloodBagImage: FC = () => {
       top={0}
       left={0}
       width="100%"
-      height={230}
+      height="100%"
       justifyContent="center"
       alignItems="center"
     >

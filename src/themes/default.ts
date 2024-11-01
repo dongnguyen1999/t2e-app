@@ -15,6 +15,7 @@ declare module '@mui/material/styles' {
 
   interface TypeText {
     contrast: string;
+    accent: string; // Add custom text color "accent"
   }
 
   interface TypeBackground {
@@ -141,7 +142,7 @@ const theme = responsiveFontSizes(createTheme({
     grey: {
       50: '#fafafa',
       100: '#f5f5f5',
-      200: '#eeeeee',
+      200: '#EBEEEF',
       300: '#e0e0e0',
       400: '#bdbdbd',
       500: '#E1E1EA',
@@ -158,6 +159,7 @@ const theme = responsiveFontSizes(createTheme({
       primary: '#10061F',
       secondary: '#475569',
       disabled: '#7F8EA4',
+      accent: '#EE511E',
     },
   },
   typography: {

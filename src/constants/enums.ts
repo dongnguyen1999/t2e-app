@@ -4,3 +4,8 @@ export enum Pages {
   FRIENDS = '/friends',
   ROOT = '/',
 }
+
+export enum MissionFilterType {
+  COMPLETED = 'completed',
+  REMAINING = 'remaining',
+}

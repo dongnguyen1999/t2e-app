@@ -1,7 +1,7 @@
-import { Button, Stack, Typography, useTheme } from "@mui/material";
-import { FC } from "react";
-import BloodBagImage from "./BloodBagImage";
-import BloodProgressBar from "./BloodProgressBar";
+import { Button, Stack, Typography, useTheme } from '@mui/material';
+import { FC } from 'react';
+import BloodBagImage from './BloodBagImage';
+import BloodProgressBar from './BloodProgressBar';
 
 const BloodCard: FC = () => {
   const theme = useTheme();
@@ -14,6 +14,7 @@ const BloodCard: FC = () => {
       border={`2px solid ${theme.palette.common.white}`}
       bgcolor="background.paper"
       height="100%"
+      maxHeight="60vh"
     >
       <Typography variant="body-14-medium" color="text.primary" textAlign="center">
         Donation just started. Blood is being collected to save a life!</Typography>
@@ -34,11 +35,11 @@ const BloodCard: FC = () => {
             borderRadius: 3,
             px: 5,
             py: 2.5,
-            background: "var(--Linear-1, linear-gradient(270deg, #FF8227 25.79%, #FF6100 87.37%))"
+            background: 'var(--Linear-1, linear-gradient(270deg, #FF8227 25.79%, #FF6100 87.37%))'
           }}
         ><Typography variant="body-14-medium" textTransform="capitalize">Claim</Typography></Button>
       </Stack>
     </Stack >);
-}
+};
 
 export default BloodCard;

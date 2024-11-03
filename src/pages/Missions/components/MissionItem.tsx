@@ -1,5 +1,5 @@
-import { Box, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { Box, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
 import SwitchHorizontalIcon from '@/assets/icons/icon-outline-switch-horizontal.svg?react';
 import MedxToken from '@/assets/images/medx-token.svg?react';
 
@@ -7,13 +7,13 @@ type Props = {
   title: string;
   image: string;
   point: number;
-  coin: number;
+  token: number;
 }
 
-const MissionItem: FC<Props> = ({ title, image, point, coin } : Props) => {
+const MissionItem: FC<Props> = ({ title, image, point, token } : Props) => {
   return (<Box p={3} borderRadius={3} bgcolor="background.paper" border="solid 2px white">
     <Stack direction="row" gap={3}>
-      <Box 
+      <Box
         component="img"
         src={image}
         height={48}
@@ -28,12 +28,12 @@ const MissionItem: FC<Props> = ({ title, image, point, coin } : Props) => {
           <SwitchHorizontalIcon />
           <Stack direction="row" gap={1} alignItems="center">
             <MedxToken width={16} height={16} style={{ marginTop: -4 }} />
-            <Typography variant="body-14-medium" color="primary">{coin}</Typography>
+            <Typography variant="body-14-medium" color="primary">{token}</Typography>
           </Stack>
         </Stack>
       </Stack>
     </Stack>
-  </Box>)
-}
+  </Box>);
+};
 
 export default MissionItem;

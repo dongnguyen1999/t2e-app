@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {
   mockTelegramEnv,
   isTMA,
@@ -21,6 +22,7 @@ if (import.meta.env.DEV) {
     let lp: LaunchParams | undefined;
     try {
       lp = retrieveLaunchParams();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       const initDataRaw = new URLSearchParams([
         ['user', JSON.stringify({
@@ -59,7 +61,7 @@ if (import.meta.env.DEV) {
         initDataRaw,
         version: '8',
         platform: 'tdesktop',
-      }
+      };
     }
 
     mockTelegramEnv(lp);

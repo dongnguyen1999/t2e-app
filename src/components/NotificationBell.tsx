@@ -1,5 +1,5 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { FC } from "react";
+import { Box, Typography, useTheme } from '@mui/material';
+import { FC } from 'react';
 import BellIcon from '@/assets/icons/icon-outline-bell.svg?react';
 
 const NotificationBell: FC = () => {
@@ -25,7 +25,7 @@ const NotificationBell: FC = () => {
       >10</Typography>
     </Box>
 
-  </Box>)
-}
+  </Box>);
+};
 
 export default NotificationBell;

@@ -46,6 +46,8 @@ declare module '@mui/material/styles' {
     'caption-8-regular': React.CSSProperties;
     'caption-8-medium': React.CSSProperties;
     'caption-10-regular': React.CSSProperties;
+    'code-14-regular': React.CSSProperties;
+    'title-28-medium': React.CSSProperties;
   }
   interface TypographyVariantsOptions {
     'title-42-medium'?: React.CSSProperties
@@ -71,16 +73,12 @@ declare module '@mui/material/styles' {
     'caption-8-regular'?: React.CSSProperties
     'caption-8-medium'?: React.CSSProperties
     'caption-10-regular'?: React.CSSProperties
+    'code-14-regular'?: React.CSSProperties
+    'title-28-medium'?: React.CSSProperties
   }
 }
 
 declare module '@mui/material/styles/createPalette' {
-  interface Palette {
-
-  }
-  interface PaletteOptions {
-
-  }
 }
 
 declare module '@mui/material/Typography' {
@@ -108,6 +106,8 @@ declare module '@mui/material/Typography' {
     'caption-8-regular': true;
     'caption-8-medium': true;
     'caption-10-regular': true;
+    'code-14-regular': true;
+    'title-28-medium': true;
   }
 }
 
@@ -140,7 +140,7 @@ const theme = responsiveFontSizes(createTheme({
       navbar: 'rgba(255, 255, 255, 0.80)',
     },
     grey: {
-      50: '#fafafa',
+      50: '#FBFCFC',
       100: '#f5f5f5',
       200: '#EBEEEF',
       300: '#e0e0e0',
@@ -327,6 +327,21 @@ const theme = responsiveFontSizes(createTheme({
       fontStyle: 'normal',
       fontWeight: 400,
       lineHeight: '14px', // 140%
+      letterSpacing: '-0.5px',
+    },
+    'code-14-regular': {
+      fontFamily: 'DM Mono',
+      fontSize: '14px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: '16px', // 114.286%
+      letterSpacing: '-0.07px',
+    },
+    'title-28-medium': {
+      fontSize: '28px',
+      fontStyle: 'normal',
+      fontWeight: 500,
+      lineHeight: '36px', // 128.571%
       letterSpacing: '-0.5px',
     }
   },

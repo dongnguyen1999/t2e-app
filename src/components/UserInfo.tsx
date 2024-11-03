@@ -1,5 +1,5 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { FC } from "react";
+import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { FC } from 'react';
 import Avatar from '@/assets/images/avatar.svg?react';
 import MedxToken from '@/assets/images/medx-token.svg?react';
 
@@ -42,7 +42,7 @@ const UserInfo: FC = () => {
         </Stack>
       </Stack>
     </Stack>
-  </Stack>)
+  </Stack>);
 };
 
 export default UserInfo;

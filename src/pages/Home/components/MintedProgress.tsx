@@ -1,5 +1,5 @@
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { Box, CircularProgress, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
 import CirularProgressIcon from '@/assets/icons/icon-circular-progress.svg?react';
 import MedxToken from '@/assets/images/medx-token.svg?react';
 import InformationCircleIcon from '@/assets/icons/icon-outline-information-circle.svg?react';
@@ -24,7 +24,7 @@ const MintedProgress: FC = () => {
         size={29}
         thickness={8}
         sx={{
-          color: (theme) => theme.palette.primary.main,
+          color: theme => theme.palette.primary.main,
           position: 'absolute',
           top: 9,
           left: 10
@@ -42,7 +42,7 @@ const MintedProgress: FC = () => {
         <InformationCircleIcon />
       </Stack>
     </Stack>
-  </Stack>)
-}
+  </Stack>);
+};
 
 export default MintedProgress;

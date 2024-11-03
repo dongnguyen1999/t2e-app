@@ -1,21 +1,21 @@
-import { Button, Typography, useTheme } from "@mui/material";
-import { FC } from "react";
+import { Button, Typography, useTheme } from '@mui/material';
+import { FC } from 'react';
 
 const ConnectWalletButton: FC = () => {
   const theme = useTheme();
   return (
-    <Button 
+    <Button
       variant="contained"
       sx={{
         p: 5,
-        bgcolor: "background.default",
-        color: "text.accent",
+        bgcolor: 'background.default',
+        color: 'text.accent',
         borderRadius: 25,
         border: `1px solid ${theme.palette.text.accent}`,
-        boxShadow: "none"
+        boxShadow: 'none'
       }}
     >
-      <Typography 
+      <Typography
         variant="body-14-medium"
         textTransform="capitalize"
       >
@@ -23,6 +23,6 @@ const ConnectWalletButton: FC = () => {
       </Typography>
     </Button>
   );
-}
+};
 
 export default ConnectWalletButton;

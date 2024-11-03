@@ -41,7 +41,7 @@ const Layout: FC = () => {
 
   return (
     <>
-      <Box width="100%" height="1000px" maxHeight="calc(100vh - 56px)">
+      <Box width="100%" height="1000px" maxHeight="85vh">
         <Outlet />
       </Box>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, bgcolor: 'background.navbar' }}>

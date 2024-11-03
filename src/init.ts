@@ -35,6 +35,6 @@ export function init(debug: boolean): void {
 
   // Add Eruda if needed.
   debug && import('eruda')
-    .then((lib) => lib.default.init())
+    .then(lib => lib.default.init())
     .catch(console.error);
 }

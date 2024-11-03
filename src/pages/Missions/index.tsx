@@ -8,7 +8,7 @@ import MissionList from './components/MissionList';
 
 const Missions: FC = () => {
   return (
-    <Stack 
+    <Stack
       direction="column"
       pt={3}
       pb={8}

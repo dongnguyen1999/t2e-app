@@ -1,5 +1,5 @@
-import { Box, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { Box, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
 import BloodBarProgress from '@/assets/images/blood-bar-progress.svg?react';
 
 const BloodProgressBar: FC = () => {
@@ -21,7 +21,7 @@ const BloodProgressBar: FC = () => {
         <BloodBarProgress height={34} style={{ marginTop: -5, marginLeft: -1 }} />
       </Stack>
     </Box>
-  </Stack>)
-}
+  </Stack>);
+};
 
 export default BloodProgressBar;

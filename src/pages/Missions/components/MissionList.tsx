@@ -123,7 +123,7 @@ const MissionList: FC = () => {
         direction="column"
         gap={3}
         flex={1}
-        maxHeight="calc(100vh - 422px)"
+        maxHeight="calc(100vh - 340px)"
         sx={{
           overflowY: 'auto',
           '&::-webkit-scrollbar': {

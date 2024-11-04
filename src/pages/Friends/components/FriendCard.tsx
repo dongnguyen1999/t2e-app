@@ -11,9 +11,10 @@ type Props = {
   avatarSize?: number;
   gap?: number;
   active?: boolean;
+  width?: number;
 }
 
-const FriendCard: FC<Props> = ({ avatar, name, point, backgroundTransparent = false, avatarSize = 64, gap = 3, active = false }: Props) => {
+const FriendCard: FC<Props> = ({ avatar, name, point, backgroundTransparent = false, avatarSize = 64, gap = 3, active = false, width }: Props) => {
   return <Stack
     direction="column"
     gap={gap}
@@ -23,6 +24,7 @@ const FriendCard: FC<Props> = ({ avatar, name, point, backgroundTransparent = fa
     alignItems="center"
     border={!backgroundTransparent ? '2px solid white' : 'none'}
     borderRadius={1.5}
+    width={width}
   >
     <Box width={avatarSize} height={avatarSize} position="relative">
       {avatar}

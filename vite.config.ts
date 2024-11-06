@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react-swc';
-import mkcert from 'vite-plugin-mkcert';
 import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
@@ -16,13 +15,18 @@ export default defineConfig({
     tsconfigPaths(),
     // Create a custom SSL certificate valid for the local machine.
     // https://www.npmjs.com/package/vite-plugin-mkcert
-    mkcert(),
     svgr(),
   ],
   publicDir: './public',
   server: {
     // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:7071',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   },
 });
-

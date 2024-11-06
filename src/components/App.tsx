@@ -7,6 +7,7 @@ import Layout from '@/pages/Layout';
 import Home from '@/pages/Home';
 import Missions from '@/pages/Missions';
 import Friends from '@/pages/Friends';
+import Forbidden from '@/pages/Layout/Forbidden';
 
 export function App() {
   const lp = useLaunchParams();
@@ -28,6 +29,7 @@ export function App() {
               <Route path="friends" element={<Friends />} />
               <Route path="*" element={<Navigate to="/home" />} />
             </Route>
+            <Route path="forbidden" element={<Forbidden />} />
             <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
         </BrowserRouter>

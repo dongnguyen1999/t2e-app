@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { BottomNavigation, BottomNavigationAction, Box, Paper, Typography } from '@mui/material';
 import { type FC } from 'react';
 import { styled } from '@mui/material/styles';
@@ -7,6 +8,9 @@ import UserCircleIcon from '@/assets/icons/icon-outline-user-circle.svg?react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Pages } from '@/constants/enums';
+import { useGetAuthenticatedUserQuery } from '@/api/authApi';
+import { initData } from '@telegram-apps/sdk-react';
+import Loading from '@/components/Loading';
 
 interface StyledBottomNavigationActionProps {
   selected?: boolean;
@@ -38,6 +42,29 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)<StyledBottom
 const Layout: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const telegramUserData = {
+    id: initData.user()?.id?.toString(),
+    first_name: initData.user()?.firstName,
+    last_name: initData.user()?.lastName,
+    username: initData.user()?.username,
+    auth_date: Math.floor((initData.authDate()?.getTime() || 0) / 1000),
+    hash: initData.hash(),
+  };
+
+  console.warn('telegramUserData', telegramUserData);
+
+  const { isLoading, data, error } = useGetAuthenticatedUserQuery(telegramUserData);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    navigate(Pages.FORBIDDEN);
+  }
+
+  console.warn('data', data);
 
   return (
     <>

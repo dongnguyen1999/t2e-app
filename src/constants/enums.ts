@@ -4,6 +4,7 @@ export enum Pages {
   MISSIONS = '/missions',
   FRIENDS = '/friends',
   ROOT = '/',
+  FORBIDDEN = '/forbidden',
 }
 
 export enum MissionFilterType {

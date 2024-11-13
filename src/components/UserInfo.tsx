@@ -2,8 +2,11 @@ import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { FC } from 'react';
 import Avatar from '@/assets/images/avatar.svg?react';
 import MedxToken from '@/assets/images/medx-token.svg?react';
+import useUserData from '@/hooks/useUserData';
 
 const UserInfo: FC = () => {
+  const { user } = useUserData();
+  const wallet = user?.wallet;
   const theme = useTheme();
   return (<Stack
     direction="row"
@@ -27,7 +30,7 @@ const UserInfo: FC = () => {
       <Stack direction="column" gap={0.5}>
         <Typography variant="caption-8-regular" color="text.disabled" >Total Assets</Typography>
         <Stack direction="row" alignItems="baseline" gap={0.5}>
-          <Typography variant="body-14-medium" color="text.primary" >0.2560</Typography>
+          <Typography variant="body-14-medium" color="text.primary" >{wallet?.assets || 0}</Typography>
           <Typography variant="caption-8-regular" color="text.disabled" >X points</Typography>
         </Stack>
       </Stack>
@@ -37,7 +40,7 @@ const UserInfo: FC = () => {
       <Stack direction="row">
         <MedxToken style={{ marginTop: -2 }} />
         <Stack direction="row" gap={0.5} alignItems="baseline">
-          <Typography variant="body-14-medium" color="text.primary" >15</Typography>
+          <Typography variant="body-14-medium" color="text.primary" >{wallet?.token || 0}</Typography>
           <Typography variant="caption-8-regular" color="text.disabled" >MEDX</Typography>
         </Stack>
       </Stack>

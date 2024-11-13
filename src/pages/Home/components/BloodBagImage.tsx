@@ -1,11 +1,25 @@
-import { Stack, Typography } from '@mui/material';
-import { FC } from 'react';
+import { Stack } from '@mui/material';
+import { FC, useCallback } from 'react';
 import BloodBagShadow from '@/assets/images/blood-bag-shadow.svg?react';
 import BloodBagVector from '@/assets/images/blood-bag-vector.svg?react';
 import BloodBadEmpty from '@/assets/images/blood-bag-empty.svg?react';
-import HourglassIcon from '@/assets/icons/icon-hourglass.svg?react';
+import BloodBadHalf from '@/assets/images/blood-bag-half.svg?react';
+import BloodBadFull from '@/assets/images/blood-bag-full.svg?react';
+import useBloodStatus from '@/hooks/useBloodStatus';
 
 const BloodBagImage: FC = () => {
+  const { progress } = useBloodStatus();
+
+  const BloodBadImage = useCallback(() => {
+    if (progress < 50) {
+      return <BloodBadEmpty />;
+    }
+    if (progress < 100) {
+      return <BloodBadHalf />;
+    }
+    return <BloodBadFull />;
+  }, [progress]);
+
   return (<Stack direction="column" justifyContent="center"
     sx={{
       flex: 1,
@@ -26,10 +40,10 @@ const BloodBagImage: FC = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <BloodBadEmpty />
+      <BloodBadImage />
     </Stack>
     <BloodBagShadow style={{ position: 'absolute', bottom: 0, left: 50 }} />
-    <Stack
+    {/* <Stack
       direction="row"
       gap={0.5}
       px={3}
@@ -43,7 +57,7 @@ const BloodBagImage: FC = () => {
     >
       <HourglassIcon style={{ marginTop: -3 }} />
       <Typography variant="body-14-medium" color="text.white" >4h : 40m : 03s</Typography>
-    </Stack>
+    </Stack> */}
   </Stack>);
 };
 

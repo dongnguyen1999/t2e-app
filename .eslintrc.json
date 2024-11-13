@@ -73,7 +73,6 @@
       "syntax"
     ],
     "unused-imports/no-unused-imports": "error",
-    "camelcase": "error",
     "brace-style": [
       "error",
       "1tbs",

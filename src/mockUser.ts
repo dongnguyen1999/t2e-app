@@ -6,6 +6,6 @@ export const mockUser = {
   language_code: 'en',
   is_premium: true,
   allows_write_to_pm: true,
-  auth_date: 1730908243623,
-  hash: '0087d7612937b161ada86674fb0c4587bc586a96669414446a5018106234b8b8',
+  auth_date: 1730991247559,
+  hash: '5ba17ca52b3ffda4203f6d7cd5435c2c8336a5893ad0064f50ca747c4032ed09',
 };

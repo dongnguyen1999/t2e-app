@@ -21,8 +21,6 @@ const useUserData = () => {
     hash: createHash(userPayload, botToken),
   };
 
-  console.warn('telegramUserData', telegramUserData);
-
   const { isLoading, data, error } = useGetAuthenticatedUserQuery(telegramUserData);
 
   if (error) {

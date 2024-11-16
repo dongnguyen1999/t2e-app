@@ -1,24 +1,18 @@
-import { Stack } from '@mui/material';
-import { FC, useCallback } from 'react';
+import { Stack, Typography } from '@mui/material';
+import { FC, useContext } from 'react';
 import BloodBagShadow from '@/assets/images/blood-bag-shadow.svg?react';
 import BloodBagVector from '@/assets/images/blood-bag-vector.svg?react';
-import BloodBadEmpty from '@/assets/images/blood-bag-empty.svg?react';
-import BloodBadHalf from '@/assets/images/blood-bag-half.svg?react';
-import BloodBadFull from '@/assets/images/blood-bag-full.svg?react';
+import useBloodProgress from '@/hooks/useBloodProgress';
+import { CountdownContext } from '..';
 import useBloodStatus from '@/hooks/useBloodStatus';
+import { zeroPad } from 'react-countdown';
+import HourglassIcon from '@/assets/icons/icon-hourglass.svg?react';
+import { BloodStatus } from '@/constants/enums';
 
 const BloodBagImage: FC = () => {
-  const { progress } = useBloodStatus();
-
-  const BloodBadImage = useCallback(() => {
-    if (progress < 50) {
-      return <BloodBadEmpty />;
-    }
-    if (progress < 100) {
-      return <BloodBadHalf />;
-    }
-    return <BloodBadFull />;
-  }, [progress]);
+  const { status } = useBloodStatus();
+  const { currentProgress, hours, minutes, seconds, total } = useContext(CountdownContext);
+  const { BloodBagImage } = useBloodProgress(status, currentProgress);
 
   return (<Stack direction="column" justifyContent="center"
     sx={{
@@ -40,10 +34,10 @@ const BloodBagImage: FC = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <BloodBadImage />
+      <BloodBagImage />
     </Stack>
     <BloodBagShadow style={{ position: 'absolute', bottom: 0, left: 50 }} />
-    {/* <Stack
+    {total && status != BloodStatus.CHARGING && <Stack
       direction="row"
       gap={0.5}
       px={3}
@@ -56,8 +50,8 @@ const BloodBagImage: FC = () => {
       alignItems="center"
     >
       <HourglassIcon style={{ marginTop: -3 }} />
-      <Typography variant="body-14-medium" color="text.white" >4h : 40m : 03s</Typography>
-    </Stack> */}
+      <Typography variant="body-14-medium" color="text.white" >{hours ? zeroPad(hours) + ' : ' : ''}{minutes ? zeroPad(minutes) + ' : ' : ''}{zeroPad(seconds)} s</Typography>
+    </Stack>}
   </Stack>);
 };
 

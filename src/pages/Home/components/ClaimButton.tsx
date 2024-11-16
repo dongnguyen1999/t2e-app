@@ -1,7 +1,9 @@
+import { authApi } from '@/api/authApi';
 import { useClaimMissionMutation } from '@/api/missionApi';
 import useUserData from '@/hooks/useUserData';
 import { Button, Typography } from '@mui/material';
 import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 type Props = {
   disabled?: boolean;
@@ -9,12 +11,15 @@ type Props = {
 
 const ClaimButton = ({ disabled }: Props) => {
   const { user } = useUserData();
+  const dispatch = useDispatch();
   const [claimMission, { isLoading }] = useClaimMissionMutation();
   const finalDisabled = disabled || isLoading;
 
   const handleClaim = useCallback(() => {
     if (user) {
-      claimMission({ mission_id: user.mission.id, user_id: user.id });
+      claimMission({ mission_id: user.mission.id, user_id: user.id }).unwrap().then(() => {
+        dispatch(authApi.util.invalidateTags(['AuthUser']));
+      });
     }
   }, [user]);
 

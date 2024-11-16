@@ -41,13 +41,11 @@ const Layout: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isLoading, user } = useUserData();
+  const { isLoading } = useUserData();
 
   if (isLoading) {
     return <Loading />;
   }
-
-  console.warn('user', user);
 
   return (
     <>

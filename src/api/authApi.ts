@@ -54,9 +54,10 @@ export type AuthResponseData = {
 }
 
 // Define a service using a base URL and expected endpoints
-export const userApi = createApi({
-  reducerPath: 'userApi',
+export const authApi = createApi({
+  reducerPath: 'authApi',
   baseQuery,
+  tagTypes: ['AuthUser'],
   endpoints: builder => ({
     getAuthenticatedUser: builder.query<AuthResponseData, AuthUserPayload>({
       query: payload => ({
@@ -65,10 +66,11 @@ export const userApi = createApi({
         body: payload,
       }),
       transformResponse: (response: { data: AuthResponseData }) => response.data,
+      providesTags: ['AuthUser'],
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAuthenticatedUserQuery } = userApi;
+export const { useGetAuthenticatedUserQuery } = authApi;

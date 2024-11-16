@@ -15,7 +15,7 @@ const Login = () => {
       username: Yup.string().required('Username is required'),
       password: Yup.string().required('Password is required'),
     }),
-    onSubmit: values => {
+    onSubmit: () => {
       // Implement your login logic here
       // For example, you can call an API to authenticate the user
       // If successful, navigate to the home page

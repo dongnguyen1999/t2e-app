@@ -11,3 +11,9 @@ export enum MissionFilterType {
   COMPLETED = 'completed',
   REMAINING = 'remaining',
 }
+
+export enum BloodStatus {
+  CHARGING = 'CHARGING',
+  DRAINING = 'DRAINING',
+  SPOILING = 'SPOILING',
+}

@@ -3,6 +3,7 @@ import { FC } from 'react';
 import Avatar from '@/assets/images/avatar.svg?react';
 import MedxToken from '@/assets/images/medx-token.svg?react';
 import useUserData from '@/hooks/useUserData';
+import { round } from 'lodash';
 
 const UserInfo: FC = () => {
   const { user } = useUserData();
@@ -30,7 +31,7 @@ const UserInfo: FC = () => {
       <Stack direction="column" gap={0.5}>
         <Typography variant="caption-8-regular" color="text.disabled" >Total Assets</Typography>
         <Stack direction="row" alignItems="baseline" gap={0.5}>
-          <Typography variant="body-14-medium" color="text.primary" >{wallet?.assets || 0}</Typography>
+          <Typography variant="body-14-medium" color="text.primary" >{round(wallet?.assets || 0, 4)}</Typography>
           <Typography variant="caption-8-regular" color="text.disabled" >X points</Typography>
         </Stack>
       </Stack>
@@ -40,7 +41,7 @@ const UserInfo: FC = () => {
       <Stack direction="row">
         <MedxToken style={{ marginTop: -2 }} />
         <Stack direction="row" gap={0.5} alignItems="baseline">
-          <Typography variant="body-14-medium" color="text.primary" >{wallet?.token || 0}</Typography>
+          <Typography variant="body-14-medium" color="text.primary" >{round(wallet?.token || 0, 2)}</Typography>
           <Typography variant="caption-8-regular" color="text.disabled" >MEDX</Typography>
         </Stack>
       </Stack>

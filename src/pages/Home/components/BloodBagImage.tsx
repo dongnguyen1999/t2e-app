@@ -37,7 +37,7 @@ const BloodBagImage: FC = () => {
       <BloodBagImage />
     </Stack>
     <BloodBagShadow style={{ position: 'absolute', bottom: 0, left: 50 }} />
-    {total && status != BloodStatus.CHARGING && <Stack
+    {(total != 0 && status != BloodStatus.CHARGING) && <Stack
       direction="row"
       gap={0.5}
       px={3}

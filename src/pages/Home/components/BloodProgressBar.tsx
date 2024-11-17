@@ -17,7 +17,7 @@ const BloodProgressBar: FC = () => {
   return (<Stack direction="column" gap={2}>
     <Stack direction="row" gap={1}>
       <Typography variant="body-14-regular" color="text.primary" >{claimMessage}</Typography>
-      {total && status == BloodStatus.CHARGING && <Typography variant="body-14-medium" color="primary.main">
+      {(total != 0 && status == BloodStatus.CHARGING) && <Typography variant="body-14-medium" color="primary.main">
         {hours ? zeroPad(hours) + ' : ' : ''}{minutes ? zeroPad(minutes) + ' : ' : ''}{zeroPad(seconds)} s
       </Typography>}
     </Stack>
@@ -35,7 +35,7 @@ const BloodProgressBar: FC = () => {
             transition: 'width 0.5s ease-in-out', // Added transition for smooth animation
           }}
         />
-        {currentProgress < 100 && <BloodBarProgress height={33} style={{ marginTop: -4, marginLeft: -1, fill: get(theme.palette, progressColor) }} />}
+        {currentProgress < 100 && <BloodBarProgress height={31} style={{ marginTop: -5, marginLeft: -1, fill: get(theme.palette, progressColor) }} />}
       </Stack>
     </Box>
   </Stack>);

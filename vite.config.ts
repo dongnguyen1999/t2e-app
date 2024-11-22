@@ -5,7 +5,7 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/t2e-app/',
+  base: '/',
   plugins: [
     // Allows using React dev server along with building a React application with Vite.
     // https://npmjs.com/package/@vitejs/plugin-react-swc
@@ -23,7 +23,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'https://t2edev.azurewebsites.net',
+        target: 'http://127.0.0.1:7071',
         changeOrigin: true,
         secure: false,
       }

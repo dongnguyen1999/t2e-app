@@ -29,8 +29,7 @@ const useUserData = () => {
 
   return {
     isLoading,
-    user: data?.user,
-    token: data?.token,
+    user: data,
   };
 };
 

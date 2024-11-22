@@ -1,116 +1,45 @@
-import { Stack, Typography } from '@mui/material';
-import { FC } from 'react';
+import { CircularProgress, Stack, Typography } from '@mui/material';
+import { FC, useEffect, useRef } from 'react';
 import HeartPoint from '@/assets/images/heart-point.svg?react';
+import { useLazyGetMissionsQuery } from '@/api/missionApi';
+import MissionImage1 from '@/assets/images/mission-image1.svg?react';
+import MissionImage2 from '@/assets/images/mission-image2.svg?react';
+import MissionImage3 from '@/assets/images/mission-image3.svg?react';
+import { debounce, map } from 'lodash';
 import MissionItem from './MissionItem';
 
-const data = [
-  {
-    id: 1,
-    title: 'Complete 3 missions',
-    description: 'Complete 3 missions to earn 3 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image1.png',
-    token: 2,
-  },
-  {
-    id: 2,
-    title: 'Complete 5 missions',
-    description: 'Complete 5 missions to earn 5 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image2.png',
-    token: 2,
-  },
-  {
-    id: 3,
-    title: 'Complete 10 missions',
-    description: 'Complete 10 missions to earn 10 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image3.png',
-    token: 2,
-  },
-  {
-    id: 4,
-    title: 'Complete 15 missions',
-    description: 'Complete 15 missions to earn 15 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image1.png',
-    token: 2,
-  },
-  {
-    id: 5,
-    title: 'Complete 20 missions',
-    description: 'Complete 20 missions to earn 20 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image2.png',
-    token: 2,
-  },
-  {
-    id: 6,
-    title: 'Complete 25 missions',
-    description: 'Complete 25 missions to earn 25 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image3.png',
-    token: 2,
-  },
-  {
-    id: 7,
-    title: 'Complete 30 missions',
-    description: 'Complete 30 missions to earn 30 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image1.png',
-    token: 2,
-  },
-  {
-    id: 8,
-    title: 'Complete 35 missions',
-    description: 'Complete 35 missions to earn 35 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image2.png',
-    token: 2,
-  },
-  {
-    id: 9,
-    title: 'Complete 40 missions',
-    description: 'Complete 40 missions to earn 40 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image3.png',
-    token: 2,
-  },
-  {
-    id: 10,
-    title: 'Complete 45 missions',
-    description: 'Complete 45 missions to earn 45 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image1.png',
-    token: 2,
-  },
-  {
-    id: 11,
-    title: 'Complete 50 missions',
-    description: 'Complete 50 missions to earn 50 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image2.png',
-    token: 2,
-  },
-  {
-    id: 12,
-    title: 'Complete 55 missions',
-    description: 'Complete 55 missions to earn 55 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image3.png',
-    token: 2,
-  },
-  {
-    id: 13,
-    title: 'Complete 60 missions',
-    description: 'Complete 60 missions to earn 60 heart points',
-    point: 0.002,
-    image: 'src/assets/images/mission-image1.png',
-    token: 2,
-  }
-];
+const missionImpagePool = [MissionImage1, MissionImage2, MissionImage3];
 
 const MissionList: FC = () => {
+  const [getMissions, { isLoading, data }] = useLazyGetMissionsQuery();
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    getMissions({
+      type: 1,
+      pageSize: 10
+    });
+  }, []);
+
+  const handleScroll = () => {
+    if (listRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = listRef.current;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        onScrollEnd();
+      }
+    }
+  };
+
+  const onScrollEnd = () => {
+    if (data?.continuationToken) {
+      getMissions({
+        type: 1,
+        pageSize: 10,
+        continuationToken: data.continuationToken
+      });
+    }
+  };
+
   return (
     <Stack direction="column" gap={3} flex={1}>
       <Stack direction="row" justifyContent="center" alignItems="center">
@@ -132,14 +61,26 @@ const MissionList: FC = () => {
           msOverflowStyle: 'none' as React.CSSProperties,
           scrollbarWidth: 'none' as React.CSSProperties,
         }}
+        onScroll={debounce(handleScroll, 500)}
+        ref={listRef}
       >
-        {data.map(item => <MissionItem
-          key={item.id}
-          title={item.title}
-          image={item.image}
-          point={item.point}
-          token={item.token}
-        />)}
+        {isLoading && (
+          <Stack width="100%" height="50vh" justifyContent="center" alignItems="center">
+            <CircularProgress />
+          </Stack>
+        )}
+        {!isLoading && !!data && map(data.missions, (mission, index) => {
+          const MissionImage = missionImpagePool[index % 3];
+          return (
+            <MissionItem
+              key={mission.id}
+              title={mission.name}
+              image={<MissionImage />}
+              point={mission.point}
+              token={0}
+            />
+          );
+        })}
       </Stack>
     </Stack>
   );

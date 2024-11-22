@@ -2,9 +2,13 @@ import { Button, Card, Stack, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useLoginMutation } from '@/api/authApi';
+import { Pages } from '@/constants/enums';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
+
 
   const formik = useFormik({
     initialValues: {
@@ -15,11 +19,10 @@ const Login = () => {
       username: Yup.string().required('Username is required'),
       password: Yup.string().required('Password is required'),
     }),
-    onSubmit: () => {
-      // Implement your login logic here
-      // For example, you can call an API to authenticate the user
-      // If successful, navigate to the home page
-      navigate('/home');
+    onSubmit: values => {
+      login(values).unwrap().then(() => {
+        navigate(Pages.ADMIN);
+      });
     },
   });
 
@@ -52,7 +55,7 @@ const Login = () => {
                 fullWidth
               />
             </Stack>
-            <Button variant="contained" color="primary" type="submit">
+            <Button variant="contained" color="primary" type="submit" disabled={isLoading}>
               Login
             </Button>
           </Stack>

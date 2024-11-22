@@ -20,6 +20,7 @@ export type AuthUser = {
   wallet: Wallet;
   resource: Resource;
   mission: Mission;
+  token: string;
 }
 
 export type Wallet = {
@@ -50,7 +51,11 @@ export type Mission = {
 
 export type AuthResponseData = {
   user: AuthUser;
-  token: string;
+}
+
+export type LoginPayload = {
+  username: string;
+  password: string;
 }
 
 // Define a service using a base URL and expected endpoints
@@ -59,18 +64,34 @@ export const authApi = createApi({
   baseQuery,
   tagTypes: ['AuthUser'],
   endpoints: builder => ({
-    getAuthenticatedUser: builder.query<AuthResponseData, AuthUserPayload>({
+    getAuthenticatedUser: builder.query<AuthUser, AuthUserPayload>({
       query: payload => ({
         url: '/auth',
         method: 'POST',
         body: payload,
       }),
-      transformResponse: (response: { data: AuthResponseData }) => response.data,
+      transformResponse: (response: { data: AuthResponseData }) => response.data.user,
+      async onCacheEntryAdded(_, { cacheDataLoaded }) {
+        const catchedData = await cacheDataLoaded;
+        localStorage.setItem('userData', JSON.stringify(catchedData.data));
+      },
       providesTags: ['AuthUser'],
+    }),
+    login: builder.mutation<AuthUser, LoginPayload>({
+      query: payload => ({
+        url: '/login',
+        method: 'POST',
+        body: payload,
+      }),
+      transformResponse: (response: { data: AuthResponseData }) => response.data.user,
+      async onCacheEntryAdded(_, { cacheDataLoaded }) {
+        const catchedData = await cacheDataLoaded;
+        localStorage.setItem('adminData', JSON.stringify(catchedData.data));
+      },
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAuthenticatedUserQuery } = authApi;
+export const { useGetAuthenticatedUserQuery, useLoginMutation } = authApi;

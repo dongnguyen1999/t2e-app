@@ -7,13 +7,26 @@ const NotificationBell: FC = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   return (<Box alignItems="center" position="relative">
-    <BellIcon
-      style={{ cursor: 'pointer' }}
-      onClick={() => setOpen(true)}
-    />
+    <Box sx={{
+      '&:active': {
+        transform: 'rotate(20deg)',
+        transition: 'transform 0.2s ease-in-out',
+      },
+      '&:not(:active)': {
+        transform: 'rotate(0deg)',
+        transition: 'transform 0.2s ease-in-out',
+      }
+    }}>
+      <BellIcon
+        style={{ cursor: 'pointer' }}
+        width={32}
+        height={32}
+        onClick={() => setOpen(true)}
+      />
+    </Box>
     <Box
       position="absolute"
-      top={6}
+      top={0}
       right={-3}
       width={12}
       height={12}

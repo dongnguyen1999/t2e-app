@@ -12,6 +12,7 @@ import AdminLayout from '@/pages/Layout/AdminLayout';
 import Login from '@/pages/Layout/components/Login';
 import Logout from '@/pages/Layout/components/Logout';
 import AdminMissions from '@/pages/AdminMissions';
+import AdminUsers from '@/pages/AdminUser';
 
 export function App() {
   const lp = useLaunchParams();
@@ -36,9 +37,10 @@ export function App() {
             <Route path="login" element={<Login />} />
             <Route path="logout" element={<Logout />} />
             <Route path="admin" element={<AdminLayout />}>
-              <Route index element={<AdminMissions />} />
+              <Route index element={<AdminUsers />} />
+              <Route path="users" element={<AdminUsers />} />
               <Route path="missions" element={<AdminMissions />} />
-              <Route path="*" element={<Navigate to="/admin/missions" />} />
+              <Route path="*" element={<Navigate to="/admin/users" />} />
             </Route>
             <Route path="forbidden" element={<Forbidden />} />
             <Route path="*" element={<Navigate to="/home" />} />

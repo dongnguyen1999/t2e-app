@@ -56,20 +56,20 @@ const AdminLayout: FC = () => {
           }}
         >
           <MenuItem
-            component={<Link to={Pages.ADMIN_MISSIONS} />}
-            icon={<AssignmentIcon color="primary" />}
-            active={pathname === Pages.ADMIN_MISSIONS}
-            disabled={pathname === Pages.ADMIN_MISSIONS}
-          >
-            <Typography variant="body-14-regular">Mission Management</Typography>
-          </MenuItem>
-          <MenuItem
             component={<Link to={Pages.ADMIN_USERS} />}
             icon={<AccountCircleIcon color="primary" />}
             active={pathname === Pages.ADMIN_USERS}
             disabled={pathname === Pages.ADMIN_USERS}
           >
             <Typography variant="body-14-regular">User Management</Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link to={Pages.ADMIN_MISSIONS} />}
+            icon={<AssignmentIcon color="primary" />}
+            active={pathname === Pages.ADMIN_MISSIONS}
+            disabled={pathname === Pages.ADMIN_MISSIONS}
+          >
+            <Typography variant="body-14-regular">Mission Management</Typography>
           </MenuItem>
           <MenuItem
             component={<Link to={Pages.LOGOUT} />}

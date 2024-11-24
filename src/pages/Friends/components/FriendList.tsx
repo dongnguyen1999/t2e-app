@@ -1,11 +1,11 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Grid2, Stack, Typography } from '@mui/material';
 import { FC, ReactNode } from 'react';
 import UserGroupIcon from '@/assets/icons/icon-outline-user-group.svg?react';
 import FriendCard from './FriendCard';
 import FriendActionButtons from './FriendActionButtons';
 
 type Props = {
-  data: { avatar: ReactNode; point: number; name: string }[];
+  data: { id: number, avatar: ReactNode; point: number; name: string }[];
   handleAddFriend: () => void;
 }
 
@@ -31,20 +31,21 @@ const FriendList: FC<Props> = ({ data, handleAddFriend }: Props) => {
         } as React.CSSProperties,
         msOverflowStyle: 'none' as React.CSSProperties,
         scrollbarWidth: 'none' as React.CSSProperties,
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignContent: 'stretch',
-        gap: 3,
       }}
     >
-      {data.map(({ avatar, name, point }) => <FriendCard
-        key={name}
-        avatar={avatar}
-        name={name}
-        point={point}
-        avatarSize={64}
-        width={98}
-      />)}
+      <Grid2 container spacing={3}>
+        {data.map(({ id, avatar, name, point }) => (
+          <Grid2 key={id} size={{ sm: 4, md: 3, lg: 2, xl: 1 }}>
+            <FriendCard
+              avatar={avatar}
+              name={name}
+              point={point}
+              avatarSize={64}
+              minWidth={100}
+            />
+          </Grid2>
+        ))}
+      </Grid2>
     </Box>
     <FriendActionButtons handleAddFriend={handleAddFriend} />
   </Stack>;

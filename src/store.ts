@@ -3,18 +3,23 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from './api/authApi';
 import { missionApi } from './api/missionApi';
 import { notificationApi } from './api/notificationApi';
+import { friendApi } from './api/friendApi';
+import { snackbarSlice } from './components/GlobalSnackbar/reducer';
 
 export const store = configureStore({
   reducer: {
+    snackbar: snackbarSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [missionApi.reducerPath]: missionApi.reducer,
     [notificationApi.reducerPath]: notificationApi.reducer,
+    [friendApi.reducerPath]: friendApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
       .concat(missionApi.middleware)
-      .concat(notificationApi.middleware),
+      .concat(notificationApi.middleware)
+      .concat(friendApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

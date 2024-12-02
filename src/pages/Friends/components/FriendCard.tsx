@@ -13,9 +13,10 @@ type Props = {
   gap?: number;
   active?: boolean;
   minWidth?: number;
+  onClick?: () => void;
 }
 
-const FriendCard: FC<Props> = ({ avatar, name, point, backgroundTransparent = false, avatarSize = 64, gap = 3, active = false, minWidth }: Props) => {
+const FriendCard: FC<Props> = ({ onClick, avatar, name, point, backgroundTransparent = false, avatarSize = 64, gap = 3, active = false, minWidth }: Props) => {
   return <Stack
     direction="column"
     gap={gap}
@@ -27,7 +28,7 @@ const FriendCard: FC<Props> = ({ avatar, name, point, backgroundTransparent = fa
     borderRadius={1.5}
     minWidth={minWidth}
   >
-    <Box width={avatarSize} height={avatarSize} position="relative">
+    <Box width={avatarSize} height={avatarSize} position="relative" onClick={onClick}>
       {avatar}
       {active && <CheckCircleIcon style={{ position: 'absolute', right: 0, bottom: 0 }} />}
     </Box>

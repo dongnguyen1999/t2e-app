@@ -1,13 +1,37 @@
 import theme from '@/themes/default';
 import { Button, Stack, Typography } from '@mui/material';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import PointIcon from '@/assets/icons/icon-point.svg?react';
 import UserAddIcon from '@/assets/icons/icon-outline-user-add.svg?react';
 import LinkIcon from '@/assets/icons/icon-outline-link.svg?react';
 import QRCodeIcon from '@/assets/icons/icon-outline-qrcode.svg?react';
+import QRCodeDialog from './QRCodeDialog';
 
-const EmptyFriendList: FC = () => {
+type Props = {
+  inviteLink: string;
+  handleAddFriend: () => void;
+}
+
+const EmptyFriendList: FC<Props> = ({ handleAddFriend, inviteLink }: Props) => {
+
+  const [showQRCode, setShowQRCode] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const handleCopyInviteLink = () => {
+    navigator.clipboard.writeText(inviteLink);
+    setCopiedLink(true);
+  };
+
+  const handleShowQRCode = () => {
+    setShowQRCode(true);
+  };
+
   return (<Stack direction="column" gap={3}>
+    <QRCodeDialog
+      open={showQRCode}
+      onClose={() => setShowQRCode(false)}
+      value={inviteLink}
+    />
     <Stack direction="column" gap={3} mt={12} py={3} px={5}>
       <Stack justifyContent="center" alignItems="center">
         <Stack direction="row" alignItems="center">
@@ -37,6 +61,7 @@ const EmptyFriendList: FC = () => {
           variant="body-16-medium"
           textTransform="initial"
           color="primary"
+          onClick={handleAddFriend}
         >
           Invite a friend
         </Typography>
@@ -56,13 +81,14 @@ const EmptyFriendList: FC = () => {
             gap: 2,
             width: '100%'
           }}
+          onClick={handleCopyInviteLink}
         >
           <Typography
             variant="body-16-medium"
             textTransform="initial"
             color="primary"
           >
-            Copy link
+            {copiedLink ? 'Copied' : 'Copy'} link
           </Typography>
           <LinkIcon width={20} height={20} />
         </Button>
@@ -79,6 +105,7 @@ const EmptyFriendList: FC = () => {
             gap: 2,
             width: '100%'
           }}
+          onClick={handleShowQRCode}
         >
           <Typography
             variant="body-16-medium"

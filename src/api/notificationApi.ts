@@ -5,19 +5,35 @@ import baseQuery from './baseQuery';
 type GetNotificationsPayload = {
   pageSize: number;
   user_id: string;
+  continuationToken?: string;
 }
+
+export type Notification = {
+  id: string;
+  user_id: string;
+  title: string;
+  body: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+};
+
+type GetNotificationsResponse = {
+  notifications: Notification[];
+  continuationToken: string;
+};
 
 // Define a service using a base URL and expected endpoints
 export const notificationApi = createApi({
   reducerPath: 'notificationApi',
   baseQuery,
   endpoints: builder => ({
-    getNotifications: builder.query<void, GetNotificationsPayload>({
+    getNotifications: builder.query<GetNotificationsResponse, GetNotificationsPayload>({
       query: payload => ({
         url: '/notification',
         params: payload,
       }),
-      // transformResponse: (response: { data:  }) => response.data,
+      transformResponse: (response: { data: { notifications: GetNotificationsResponse } }) => response.data.notifications,
     }),
   }),
 });

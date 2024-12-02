@@ -2,7 +2,7 @@ import { useGetAuthenticatedUserQuery } from '@/api/authApi';
 import { Pages } from '@/constants/enums';
 import { initData } from '@telegram-apps/sdk-react';
 import { useNavigate } from 'react-router-dom';
-import { createHash } from '@/utils/hashUtils';
+import { createHash } from '@/utils/dataUtils';
 
 const useUserData = () => {
   const navigate = useNavigate();

@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { Pages } from '@/constants/enums';
 import Loading from '@/components/Loading';
 import useUserData from '@/hooks/useUserData';
+import GlobalSnackbar from '@/components/GlobalSnackbar';
 
 interface StyledBottomNavigationActionProps {
   selected?: boolean;
@@ -49,6 +50,7 @@ const Layout: FC = () => {
 
   return (
     <>
+      <GlobalSnackbar />
       <Box width="100%" height="1000px" maxHeight="85vh">
         <Outlet />
       </Box>

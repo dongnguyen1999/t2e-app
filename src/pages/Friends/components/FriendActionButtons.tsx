@@ -1,15 +1,32 @@
 import { IconButton, Stack } from '@mui/material';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import UserAddIcon from '@/assets/icons/icon-outline-user-add.svg?react';
 import LinkIcon from '@/assets/icons/icon-outline-link.svg?react';
 import QRCodeIcon from '@/assets/icons/icon-outline-qrcode.svg?react';
+import QRCodeDialog from './QRCodeDialog';
 
 type Props = {
   handleAddFriend: () => void;
+  inviteLink: string;
 }
 
-const FriendActionButtons: FC<Props> = ({ handleAddFriend }: Props) => {
+const FriendActionButtons: FC<Props> = ({ handleAddFriend, inviteLink }: Props) => {
+  const [showQRCode, setShowQRCode] = useState(false);
+
+  const handleCopyInviteLink = () => {
+    navigator.clipboard.writeText(inviteLink);
+  };
+
+  const handleShowQRCode = () => {
+    setShowQRCode(true);
+  };
+
   return <Stack direction="column" position="absolute" right={0} bottom={72} gap={1.5}>
+    <QRCodeDialog
+      open={showQRCode}
+      onClose={() => setShowQRCode(false)}
+      value={inviteLink}
+    />
     <IconButton
       sx={{
         // bgcolor: 'background.paper',
@@ -37,6 +54,7 @@ const FriendActionButtons: FC<Props> = ({ handleAddFriend }: Props) => {
         gap: 2,
         p: 2.5,
       }}
+      onClick={handleCopyInviteLink}
     >
       <LinkIcon width={20} height={20} />
     </IconButton>
@@ -51,6 +69,7 @@ const FriendActionButtons: FC<Props> = ({ handleAddFriend }: Props) => {
         gap: 2,
         p: 2.5,
       }}
+      onClick={handleShowQRCode}
     >
       <QRCodeIcon width={20} height={20} />
     </IconButton>

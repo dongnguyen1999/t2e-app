@@ -9,7 +9,6 @@ import {
 import { Box, Button, IconButton, Tooltip, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Mission } from '@/api/authApi';
 import { useFormik } from 'formik';
 
 const initialMissions: Mission[] = [
@@ -19,6 +18,7 @@ const initialMissions: Mission[] = [
 
 import * as yup from 'yup';
 import { FormikAction } from '@/constants/enums';
+import { Mission } from '@/api/missionApi';
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Required'),

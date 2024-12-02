@@ -1,7 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from './baseQuery';
-import { unionBy } from 'lodash';
 
 type ClaimMissionPayload = {
   mission_id: string;
@@ -14,19 +13,19 @@ type GetMissionsPayload = {
   continuationToken?: string;
 }
 
-type Mission = {
+export type Mission = {
   id: string;
   name: string;
   description: string;
   status: number;
   type: number;
   point: number;
-  user_mission_status: number;
-  completed_at: string | null;
-  cooldown_period: string | null;
+  user_mission_status?: number;
+  completed_at?: string;
+  cooldown_period?: number;
 }
 
-type GetMissionsResponse = {
+export type GetMissionsResponse = {
   missions: Mission[];
   continuationToken: string;
 }
@@ -50,18 +49,6 @@ export const missionApi = createApi({
         params: payload,
       }),
       transformResponse: (response: { data: GetMissionsResponse }) => response.data,
-      merge(currentCacheData, responseData) {
-        const mergedMissions = unionBy(
-          currentCacheData?.missions || [],
-          responseData.missions,
-          'id'
-        );
-
-        return {
-          ...responseData,
-          missions: mergedMissions,
-        };
-      },
     }),
   }),
 });

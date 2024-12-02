@@ -1,15 +1,20 @@
 import { Box, Grid2, Stack, Typography } from '@mui/material';
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import UserGroupIcon from '@/assets/icons/icon-outline-user-group.svg?react';
 import FriendCard from './FriendCard';
 import FriendActionButtons from './FriendActionButtons';
+import { Friend } from '@/api/friendApi';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import FriendAvatar from '@/assets/images/friend-avatar1.svg?react';
 
 type Props = {
-  data: { id: number, avatar: ReactNode; point: number; name: string }[];
+  data: Friend[];
+  listRef: ReturnType<typeof useInfiniteScroll>['listRef'];
+  inviteLink: string;
   handleAddFriend: () => void;
 }
 
-const FriendList: FC<Props> = ({ data, handleAddFriend }: Props) => {
+const FriendList: FC<Props> = ({ data, handleAddFriend, listRef, inviteLink }: Props) => {
   return <Stack
     direction="column"
     gap={3}
@@ -32,14 +37,15 @@ const FriendList: FC<Props> = ({ data, handleAddFriend }: Props) => {
         msOverflowStyle: 'none' as React.CSSProperties,
         scrollbarWidth: 'none' as React.CSSProperties,
       }}
+      ref={listRef}
     >
       <Grid2 container spacing={3}>
-        {data.map(({ id, avatar, name, point }) => (
+        {data.map(({ id, first_name, last_name }) => (
           <Grid2 key={id} size={{ sm: 4, md: 3, lg: 2, xl: 1 }}>
             <FriendCard
-              avatar={avatar}
-              name={name}
-              point={point}
+              avatar={<FriendAvatar />}
+              name={`${first_name} ${last_name}`}
+              point={0}
               avatarSize={64}
               minWidth={100}
             />
@@ -47,7 +53,10 @@ const FriendList: FC<Props> = ({ data, handleAddFriend }: Props) => {
         ))}
       </Grid2>
     </Box>
-    <FriendActionButtons handleAddFriend={handleAddFriend} />
+    <FriendActionButtons
+      handleAddFriend={handleAddFriend}
+      inviteLink={inviteLink}
+    />
   </Stack>;
 };
 

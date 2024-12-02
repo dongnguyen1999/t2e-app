@@ -1,6 +1,7 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from './baseQuery';
+import { Mission } from './missionApi';
 
 export type AuthUserPayload = {
   id?: string;
@@ -21,6 +22,8 @@ export type AuthUser = {
   resource: Resource;
   mission: Mission;
   token: string;
+  count_completed_mission: number;
+  count_remaining_mission: number;
 }
 
 export type Wallet = {
@@ -36,17 +39,6 @@ export type Resource = {
   total_tokens: number;
   total_assets: number;
   ratio: number;
-}
-
-export type Mission = {
-  id: string;
-  name: string;
-  description: string;
-  status: number;
-  point: number;
-  type: number;
-  cooldown_period: number;
-  completed_at: string;
 }
 
 export type AuthResponseData = {

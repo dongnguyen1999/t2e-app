@@ -1,115 +1,57 @@
-import { Box, Button, Drawer, InputAdornment, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Button, CircularProgress, Drawer, InputAdornment, Stack, TextField, Typography, useTheme } from '@mui/material';
 import SearchIcon from '@/assets/icons/icon-outline-search.svg?react';
 import InviteFriendList from './InviteFriendList';
-import FriendAvalar from '@/assets/images/friend-avatar1.svg?react';
 import RefreshIcon from '@/assets/icons/icon-solid-refresh.svg?react';
+import { useEffect, useState } from 'react';
+import { debounce, size } from 'lodash';
+import { Friend, useCreateFriendInvatationMutation } from '@/api/friendApi';
+import { useDispatch } from 'react-redux';
+import { showSnackbar } from '@/components/GlobalSnackbar/reducer';
 
 type Props = {
   open: boolean;
+  inviteLink: string;
   onClose: () => void;
 };
 
-const friends = [
-  {
-    avatar: <FriendAvalar />,
-    name: 'Jane Smith',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Alice Johnson',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Bob Brown',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Charlie Davis',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Diana Evans',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Ethan Harris',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Fiona Green',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'George King',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Hannah Lee',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Ian Martinez',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Jack Wilson',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Karen Young',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Liam Scott',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Mia Turner',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Noah Walker',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Olivia Hall',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Paul Allen',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Quinn Wright',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Rachel Adams',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Sam Baker',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Tina Clark',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Uma Davis',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Victor Evans',
-  },
-  {
-    avatar: <FriendAvalar />,
-    name: 'Wendy Foster',
-  }
-];
-
-const AddFriendDrawer = ({ open, onClose }: Props) => {
+const AddFriendDrawer = ({ open, onClose, inviteLink }: Props) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const [searchKey, setSearchKey] = useState('');
+  const [messsage, setMessage] = useState('');
+  const [selectedFriends, setSelectedFriends] = useState<Friend[]>([]);
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const [createFriendInvitation, { isLoading }] = useCreateFriendInvatationMutation();
+
+  useEffect(() => {
+    if (!open) {
+      setSearchKey('');
+      setSelectedFriends([]);
+      setCopiedLink(false);
+      setMessage('');
+    }
+  }, [open]);
+
+  const handleCopyInviteLink = () => {
+    navigator.clipboard.writeText(inviteLink);
+    setCopiedLink(true);
+  };
+
+  const handleSendInvite = () => {
+    createFriendInvitation({
+      friend_user_ids: selectedFriends.map(friend => friend.id),
+      message: messsage
+    }).unwrap().then(() => {
+      onClose();
+    }).catch(error => {
+      dispatch(showSnackbar({
+        id: 'add-friend-error',
+        message: error.data.message,
+      }));
+    });
+  };
+
   return (<Drawer
     anchor="bottom"
     open={open}
@@ -141,15 +83,22 @@ const AddFriendDrawer = ({ open, onClose }: Props) => {
               disableUnderline: true
             },
           }}
+          onChange={debounce(e => setSearchKey(e.target.value), 500)}
         />
       </Stack>
-      <InviteFriendList data={friends} />
+      <InviteFriendList
+        searchKey={searchKey}
+        selectedFriends={selectedFriends}
+        setSelectedFriends={setSelectedFriends}
+      />
       <TextField
         multiline
         rows={2}
         sx={{
           px: 5
         }}
+        value={messsage}
+        onChange={e => setMessage(e.target.value)}
         slotProps={{
           input: {
             sx: {
@@ -160,7 +109,7 @@ const AddFriendDrawer = ({ open, onClose }: Props) => {
               },
               ...theme.typography['body-14-regular'],
             },
-            endAdornment: <InputAdornment position="end"><RefreshIcon /></InputAdornment>
+            endAdornment: <InputAdornment position="end"><RefreshIcon onClick={() => setMessage('')} /></InputAdornment>
           }
         }}
       />
@@ -177,15 +126,18 @@ const AddFriendDrawer = ({ open, onClose }: Props) => {
             display: 'flex',
             flexDirection: 'row',
             gap: 2,
-            width: '100%'
+            width: '100%',
+            height: 20,
+            boxSizing: 'content-box'
           }}
+          onClick={handleCopyInviteLink}
         >
           <Typography
             variant="body-14-medium"
             textTransform="initial"
             color="primary"
           >
-            Copy link
+            {copiedLink ? 'Copied' : 'Copy'} link
           </Typography>
         </Button>
         <Button
@@ -200,8 +152,12 @@ const AddFriendDrawer = ({ open, onClose }: Props) => {
             display: 'flex',
             flexDirection: 'row',
             gap: 2,
-            width: '100%'
+            width: '100%',
+            height: 20,
+            boxSizing: 'content-box'
           }}
+          onClick={handleSendInvite}
+          disabled={isLoading || !size(selectedFriends)}
         >
           <Stack direction="row" gap={2.5}>
             <Typography
@@ -212,9 +168,10 @@ const AddFriendDrawer = ({ open, onClose }: Props) => {
             Send
             </Typography>
           </Stack>
-          <Box bgcolor="info.main" width={20} height={20} borderRadius="50%" display="flex" justifyContent="center" alignItems="center">
-            <Typography variant="body-14-regular" color="common.white" mt={0.5}>5</Typography>
-          </Box>
+          {isLoading && <CircularProgress size={12} />}
+          {(!isLoading && size(selectedFriends)) ? <Box bgcolor="info.main" width={20} height={20} borderRadius="50%" display="flex" justifyContent="center" alignItems="center">
+            <Typography variant="body-14-regular" color="common.white" mt={0.5}>{size(selectedFriends)}</Typography>
+          </Box> : null}
         </Button>
       </Stack>
     </Stack>

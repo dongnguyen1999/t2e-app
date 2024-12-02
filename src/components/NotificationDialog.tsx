@@ -1,9 +1,11 @@
-import { Dialog, AppBar, Toolbar, Slide, IconButton, Typography, CircularProgress, Stack, Divider, List, ListItemButton, ListItemText } from '@mui/material';
+import { Dialog, AppBar, Toolbar, Slide, IconButton, Typography, Stack, Divider, List, ListItemButton, ListItemText, LinearProgress } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import { FC, forwardRef, ReactElement, Ref, useEffect } from 'react';
+import { FC, forwardRef, ReactElement, Ref } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import { useLazyGetNotificationsQuery } from '@/api/notificationApi';
+import { useLazyGetNotificationsQuery, Notification } from '@/api/notificationApi';
 import useUserData from '@/hooks/useUserData';
+import moment from 'moment';
+import useInfiniteScroll, { UseLazyQuery } from '@/hooks/useInfiniteScroll';
 
 type Props = {
   handleClose: () => void;
@@ -22,13 +24,15 @@ Transition.displayName = 'Transition';
 
 const NotificationDialog: FC<Props> = ({ handleClose, open }: Props) => {
   const { user } = useUserData();
-  const [getNotifications, { isLoading }] = useLazyGetNotificationsQuery();
 
-  useEffect(() => {
-    if (open) {
-      getNotifications({ pageSize: 10, user_id: user?.id || '' });
-    }
-  }, [open]);
+  const { listRef, isFetching, data } = useInfiniteScroll<Notification>(
+    useLazyGetNotificationsQuery as UseLazyQuery,
+    {
+      user_id: user?.id || '',
+      pageSize: 10,
+    },
+    'notifications',
+  );
 
   return (
     <Dialog
@@ -42,7 +46,12 @@ const NotificationDialog: FC<Props> = ({ handleClose, open }: Props) => {
         },
       }}
     >
-      <AppBar sx={{ position: 'relative', backgroundColor: 'background.navbar' }}>
+      {isFetching && (
+        <Stack width="100%" sx={{ position: 'sticky', top: 0, zIndex: 1101 }}>
+          <LinearProgress />
+        </Stack>
+      )}
+      <AppBar sx={{ position: 'sticky', top: 0, backgroundColor: 'common.white' }}>
         <Toolbar>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div" color="text.primary">
             Notifications
@@ -56,22 +65,30 @@ const NotificationDialog: FC<Props> = ({ handleClose, open }: Props) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      {isLoading ? <Stack width="100%" height="80vh" justifyContent="center" alignItems="center">
-        <CircularProgress />
-      </Stack>: <List>
-        <ListItemButton>
-          <ListItemText primary="New message from John" secondary="Hey, are you available for a meeting tomorrow?" />
-        </ListItemButton>
-        <Divider />
-        <ListItemButton>
-          <ListItemText primary="Server downtime" secondary="The server will be down for maintenance at 3 AM." />
-        </ListItemButton>
-        <Divider />
-        <ListItemButton>
-          <ListItemText primary="Update available" secondary="A new update is available for your application." />
-        </ListItemButton>
-      </List>}
-
+      <List
+        ref={listRef}
+        component="div"
+        sx={{ overflowY: 'auto', height: '100%' }}
+      >
+        {data.map(notification => (
+          <div key={notification.id}>
+            <ListItemButton>
+              <ListItemText
+                primary={notification.title}
+                secondary={
+                  <>
+                    {notification.body}
+                    <Typography variant="caption-10-regular" display="block" textAlign="right">
+                      {moment(notification.created_at).format('MMMM Do YYYY, h:mm:ss A')}
+                    </Typography>
+                  </>
+                }
+              />
+            </ListItemButton>
+            <Divider />
+          </div>
+        ))}
+      </List>
     </Dialog>
   );
 };

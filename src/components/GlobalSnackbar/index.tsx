@@ -4,7 +4,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
-const GlobalSnackbar = () => {
+type Props = {
+  align?: 'left' | 'right' | 'center';
+};
+
+const GlobalSnackbar = ({ align = 'center' }: Props) => {
   const [open, setOpen] = useState<string | number>('');
   const { id, message, createdAt } = useSelector((state: RootState) => state.snackbar);
 
@@ -38,7 +42,7 @@ const GlobalSnackbar = () => {
 
   return (
     <Snackbar
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      anchorOrigin={{ vertical: 'top', horizontal: align }}
       open={!!open}
       autoHideDuration={3000}
       onClose={handleClose}

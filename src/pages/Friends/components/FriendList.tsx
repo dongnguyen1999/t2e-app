@@ -40,12 +40,12 @@ const FriendList: FC<Props> = ({ data, handleAddFriend, listRef, inviteLink }: P
       ref={listRef}
     >
       <Grid2 container spacing={3}>
-        {data.map(({ id, first_name, last_name }) => (
+        {data.map(({ id, first_name, last_name, point }) => (
           <Grid2 key={id} size={{ sm: 4, md: 3, lg: 2, xl: 1 }}>
             <FriendCard
               avatar={<FriendAvatar />}
               name={`${first_name} ${last_name}`}
-              point={0}
+              point={point}
               avatarSize={64}
               minWidth={100}
             />

@@ -20,9 +20,10 @@ type Props = {
   type: MissionFilterType;
   count: number;
   selected?: boolean;
+  onClick?: () => void;
 }
 
-const MissionFilterItem: FC<Props> = ({ type, count, selected }: Props) => {
+const MissionFilterItem: FC<Props> = ({ type, count, selected, onClick }: Props) => {
   const config = missionFilterConfig[type];
   const theme = useTheme();
   return (config && <Stack
@@ -35,6 +36,7 @@ const MissionFilterItem: FC<Props> = ({ type, count, selected }: Props) => {
     borderRadius={8}
     border={`solid 2px ${selected ? theme.palette.grey[500] : theme.palette.common.white}`}
     boxShadow={selected ? '0px 8px 16px 0px rgba(9, 30, 66, 0.20)': undefined}
+    onClick={onClick}
   >
     {config.icon && <Box component={config.icon} m={2} />}
     <Stack direction="column" mr={3}>

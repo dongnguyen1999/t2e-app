@@ -14,18 +14,21 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Loading from '@/components/Loading';
 import { Pages } from '@/constants/enums';
 import useAdminData from '@/hooks/useAdminData';
+import GlobalSnackbar from '@/components/GlobalSnackbar';
 
 const AdminLayout: FC = () => {
   const { isLoading } = useAdminData();
   const { pathname } = useLocation();
   const theme = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+
   if (isLoading) {
     return <Loading />;
   }
 
   return (
     <Box display="flex" height="100vh">
+      <GlobalSnackbar align="right" />
       <Sidebar
         collapsed={!isOpen}
         onMouseEnter={() => setIsOpen(true)}

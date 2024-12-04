@@ -1,12 +1,14 @@
 import NotificationBell from '@/components/NotificationBell';
 import UserInfo from '@/components/UserInfo';
 import { Stack } from '@mui/material';
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 import MissionFilter from './components/MissionFilter';
 import MissionList from './components/MissionList';
 
 
 const Missions: FC = () => {
+  const [missionFilter, setMissionFilter] = useState(1);
+
   return (
     <Stack
       direction="column"
@@ -21,8 +23,13 @@ const Missions: FC = () => {
         <NotificationBell />
       </Stack>
       <Stack flex={1} gap={8}>
-        <MissionFilter />
-        <MissionList />
+        <MissionFilter
+          filter={missionFilter}
+          setFilter={setMissionFilter}
+        />
+        <MissionList
+          filter={missionFilter}
+        />
       </Stack>
     </Stack>
   );

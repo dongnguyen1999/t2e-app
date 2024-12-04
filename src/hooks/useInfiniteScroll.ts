@@ -11,16 +11,23 @@ const useInfiniteScroll = <T>(useLazyQuery: UseLazyQuery, queryParams: {[key: st
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMergedData([]);
     fetchData(queryParams);
   }, [JSON.stringify(queryParams)]);
 
   useEffect(() => {
     if (data && get(data, key)) {
-      setMergedData(prevData => uniqBy([...prevData, ...get(data, key)], 'id'));
+      setMergedData(prevData => {
+        const newData = get(data, key);
+        const updatedData = [...prevData, ...newData];
+        const uniqueData = uniqBy(updatedData.reverse(), 'id').reverse();
+        return uniqueData;
+      });
     }
   }, [data]);
 
   const handleScrollEnd = useCallback(() => {
+    console.warn('handleScrollEnd');
     if (get(data, 'continuationToken')) {
       fetchData({
         ...queryParams,

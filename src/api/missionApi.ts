@@ -13,6 +13,15 @@ type GetMissionsPayload = {
   continuationToken?: string;
 }
 
+type UpsertMissionPayload = {
+  id?: string;
+  name: string;
+  description: string;
+  status: number;
+  type: number;
+  point: number;
+}
+
 export type Mission = {
   id: string;
   name: string;
@@ -34,6 +43,7 @@ export type GetMissionsResponse = {
 export const missionApi = createApi({
   reducerPath: 'missionApi',
   baseQuery,
+  tagTypes: ['Missions'],
   endpoints: builder => ({
     claimMission: builder.mutation<void, ClaimMissionPayload>({
       query: payload => ({
@@ -49,10 +59,35 @@ export const missionApi = createApi({
         params: payload,
       }),
       transformResponse: (response: { data: GetMissionsResponse }) => response.data,
+      providesTags: ['Missions'],
+    }),
+    createMission: builder.mutation<Mission, UpsertMissionPayload>({
+      query: payload => ({
+        url: '/mission',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['Missions'],
+    }),
+    updateMission: builder.mutation<Mission, UpsertMissionPayload>({
+      query: payload => ({
+        url: '/mission',
+        method: 'PUT',
+        body: payload,
+      }),
+      invalidatesTags: ['Missions'],
+    }),
+    deleteMission: builder.mutation<void, string>({
+      query: id => ({
+        url: '/mission',
+        method: 'DELETE',
+        params: { id },
+      }),
+      invalidatesTags: ['Missions'],
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useClaimMissionMutation, useLazyGetMissionsQuery } = missionApi;
+export const { useClaimMissionMutation, useLazyGetMissionsQuery, useCreateMissionMutation, useUpdateMissionMutation, useDeleteMissionMutation } = missionApi;

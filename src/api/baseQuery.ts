@@ -1,14 +1,19 @@
+import { Pages } from '@/constants/enums';
 import { apiProxy } from '@/utils/proxy';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
-import { isEmpty } from 'lodash';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: apiProxy(''),
   prepareHeaders: headers => {
-    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    if (isEmpty(userData)) {
+    const pathname = window.location.pathname;
+    let userData;
+
+    if (pathname.startsWith(Pages.ADMIN)) {
       userData = JSON.parse(localStorage.getItem('adminData') || '{}');
+    } else {
+      userData = JSON.parse(localStorage.getItem('userData') || '{}');
     }
+
     if (userData) {
       headers.set('authorization', `Bearer ${userData.token}`);
     }

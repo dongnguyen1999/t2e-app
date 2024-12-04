@@ -1,11 +1,22 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from './baseQuery';
-import { unionBy } from 'lodash';
 
 type GetUsersPayload = {
   pageSize: number;
   continuationToken?: string;
+}
+
+type SearchUsersPayload = {
+  name?: string;
+  pageSize: number;
+  continuationToken?: string;
+}
+
+type UpsertUserPayload = {
+  username: string;
+  first_name: string;
+  last_name: string;
 }
 
 export type User = {
@@ -26,6 +37,7 @@ type GetUsersResponse = {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery,
+  tagTypes: ['Users'],
   endpoints: builder => ({
     getAllUsers: builder.query<GetUsersResponse, GetUsersPayload>({
       query: payload => ({
@@ -33,22 +45,30 @@ export const userApi = createApi({
         params: payload,
       }),
       transformResponse: (response: { data: GetUsersResponse }) => response.data,
-      merge(currentCacheData, responseData) {
-        const mergedMissions = unionBy(
-          currentCacheData?.users || [],
-          responseData.users,
-          'id'
-        );
-
-        return {
-          ...responseData,
-          users: mergedMissions,
-        };
-      },
+      providesTags: ['Users'],
+    }),
+    searchUsers: builder.query<GetUsersResponse, SearchUsersPayload>({
+      query: payload => ({
+        url: '/user/search',
+        params: payload,
+      }),
+      transformResponse: (response: { data: GetUsersResponse }) => response.data,
+      providesTags: ['Users'],
+    }),
+    createUser: builder.mutation<User, UpsertUserPayload>({
+      query: payload => ({
+        url: '/user',
+        method: 'POST',
+        body: {
+          ...payload,
+          auth_date: Date.now() / 1000,
+        },
+      }),
+      invalidatesTags: ['Users'],
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery } = userApi;
+export const { useGetAllUsersQuery, useLazySearchUsersQuery, useCreateUserMutation } = userApi;

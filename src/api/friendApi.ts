@@ -24,6 +24,7 @@ export type Friend = {
   auth_date: number;
   created_at: string;
   updated_at: string;
+  point: number;
 }
 
 type FriendResponse = {

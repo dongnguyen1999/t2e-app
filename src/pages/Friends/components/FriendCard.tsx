@@ -7,7 +7,7 @@ import { round } from 'lodash';
 type Props = {
   avatar: ReactNode;
   name: string;
-  point?: number;
+  point: number;
   backgroundTransparent?: boolean;
   avatarSize?: number;
   gap?: number;
@@ -41,10 +41,10 @@ const FriendCard: FC<Props> = ({ onClick, avatar, name, point, backgroundTranspa
         overflow="hidden"
         maxWidth={minWidth ? minWidth - 16 : '100%'}
       >{name}</Typography>
-      {point && <Stack direction="row">
+      <Stack direction="row">
         <PointIcon width={16} height={16} style={{ marginTop: -1 }} />
         <Typography variant="caption-12-regular" color="text.primary">{round(point, 3)}</Typography>
-      </Stack>}
+      </Stack>
     </Stack>
   </Stack>;
 };

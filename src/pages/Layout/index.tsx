@@ -10,6 +10,8 @@ import { Pages } from '@/constants/enums';
 import Loading from '@/components/Loading';
 import useUserData from '@/hooks/useUserData';
 import GlobalSnackbar from '@/components/GlobalSnackbar';
+import { useLaunchParams, miniApp, useSignal } from '@telegram-apps/sdk-react';
+import { AppRoot } from '@telegram-apps/telegram-ui';
 
 interface StyledBottomNavigationActionProps {
   selected?: boolean;
@@ -41,6 +43,8 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)<StyledBottom
 const Layout: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const lp = useLaunchParams();
+  const isDark = useSignal(miniApp.isDark);
 
   const { isLoading } = useUserData();
 
@@ -49,7 +53,10 @@ const Layout: FC = () => {
   }
 
   return (
-    <>
+    <AppRoot
+      appearance={isDark ? 'dark' : 'light'}
+      platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
+    >
       <GlobalSnackbar />
       <Box width="100%" height="1000px" maxHeight="85vh">
         <Outlet />
@@ -82,7 +89,7 @@ const Layout: FC = () => {
           />
         </BottomNavigation>
       </Paper >
-    </>
+    </AppRoot>
   );
 };
 

@@ -43,6 +43,7 @@ const InviteFriendList: FC<Props> = ({ searchKey, selectedFriends, setSelectedFr
         backgroundTransparent
         avatarSize={48}
         gap={1.5}
+        point={friend.point}
         active={selectedFriends.some(_friend => _friend.id === friend.id)}
         onClick={() => setSelectedFriends(selectedFriends.some(_friend => _friend.id === friend.id)
           ? selectedFriends.filter(_friend => _friend.id !== friend.id)

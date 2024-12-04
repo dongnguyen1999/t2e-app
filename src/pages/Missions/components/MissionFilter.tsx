@@ -5,7 +5,12 @@ import { MissionFilterType } from '@/constants/enums';
 import useUserData from '@/hooks/useUserData';
 // import ConnectWalletButton from "./ConnectWalletButton";
 
-const MissionFilter: FC = () => {
+type Props = {
+  filter: number;
+  setFilter: (filter: number) => void;
+}
+
+const MissionFilter: FC<Props> = ({ filter, setFilter }: Props) => {
   const { user } = useUserData();
   return (
     <Stack
@@ -15,8 +20,18 @@ const MissionFilter: FC = () => {
       gap={5}
     >
       {/* <ConnectWalletButton /> */}
-      <MissionFilterItem type={MissionFilterType.COMPLETED} count={user?.count_completed_mission || 0} selected />
-      <MissionFilterItem type={MissionFilterType.REMAINING} count={user?.count_remaining_mission || 0} />
+      <MissionFilterItem
+        type={MissionFilterType.COMPLETED}
+        count={user?.count_completed_mission || 0}
+        selected={filter === MissionFilterType.COMPLETED}
+        onClick={() => setFilter(MissionFilterType.COMPLETED)}
+      />
+      <MissionFilterItem
+        type={MissionFilterType.REMAINING}
+        count={user?.count_remaining_mission || 0}
+        selected={filter === MissionFilterType.REMAINING}
+        onClick={() => setFilter(MissionFilterType.REMAINING)}
+      />
     </Stack>
   );
 };

@@ -159,12 +159,16 @@ const missionImpagePool = [MissionImage1, MissionImage2, MissionImage3];
 //   ]
 // };
 
-const MissionList: FC = () => {
+type Props = {
+  filter: number;
+}
+
+const MissionList: FC<Props> = ({ filter }: Props) => {
   const { listRef, isFetching, data } = useInfiniteScroll<Mission>(
     useLazyGetMissionsQuery as UseLazyQuery,
     {
       pageSize: 10,
-      type: 1,
+      type: filter,
     },
     'missions'
   );

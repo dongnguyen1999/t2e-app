@@ -20,16 +20,16 @@ export function App() {
       <CssBaseline enableColorScheme />
       <BrowserRouter>
         <Routes>
-          <Route path="t2e-app/app" element={<Layout />}>
+          <Route path="app" element={<Layout />}>
             <Route index element={<Navigate to={Pages.HOME} />} />
             <Route path="home" element={<Home />} />
             <Route path="missions" element={<Missions />} />
             <Route path="friends" element={<Friends />} />
             <Route path="*" element={<Navigate to={Pages.HOME} />} />
           </Route>
-          <Route path="t2e-app/login" element={<Login />} />
-          <Route path="t2e-app/logout" element={<Logout />} />
-          <Route path="t2e-app/admin" element={<AdminLayout />}>
+          <Route path="login" element={<Login />} />
+          <Route path="logout" element={<Logout />} />
+          <Route path="admin" element={<AdminLayout />}>
             <Route index element={<AdminUsers />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="missions" element={<AdminMissions />} />

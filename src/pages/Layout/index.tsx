@@ -12,6 +12,13 @@ import useUserData from '@/hooks/useUserData';
 import GlobalSnackbar from '@/components/GlobalSnackbar';
 import { useLaunchParams, miniApp, useSignal } from '@telegram-apps/sdk-react';
 import { AppRoot } from '@telegram-apps/telegram-ui';
+import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
+import { init } from '@/init.ts';
+
+// Configure all application dependencies.
+console.warn('Location pathname', window.location.pathname);
+
+if (!window.location.pathname.startsWith(Pages.ADMIN)) init(retrieveLaunchParams().startParam === 'debug' || import.meta.env.DEV);
 
 interface StyledBottomNavigationActionProps {
   selected?: boolean;

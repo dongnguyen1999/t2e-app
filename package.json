@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "homepage": "https://dongnguyen1999.github.io/t2e-app/",
+  "homepage": "https://t2e-app-f6bdcdczbwcza6a7.southeastasia-01.azurewebsites.net",
   "scripts": {
     "deploy": "gh-pages -d dist",
     "start": "vite --host",

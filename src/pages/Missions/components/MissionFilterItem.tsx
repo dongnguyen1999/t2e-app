@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import CheckCircleIcon from '@/assets/icons/icon-outline-check-circle.svg?react';
 import AnnotationIcon from '@/assets/icons/icon-outline-annotation.svg?react';
-import { MissionFilterType } from '@/constants/enums';
+import { MissionFilterType } from '@/constants';
 
 const missionFilterConfig = {
   [MissionFilterType.COMPLETED]: {

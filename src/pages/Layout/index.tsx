@@ -1,24 +1,18 @@
 import { BottomNavigation, BottomNavigationAction, Box, Paper, Typography } from '@mui/material';
-import { type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { styled } from '@mui/material/styles';
 import HomeIcon from '@/assets/icons/icon-solid-home.svg?react';
 import CollectionIcon from '@/assets/icons/icon-outline-collection.svg?react';
 import UserCircleIcon from '@/assets/icons/icon-outline-user-circle.svg?react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 import Loading from '@/components/Loading';
 import useUserData from '@/hooks/useUserData';
 import GlobalSnackbar from '@/components/GlobalSnackbar';
 import { useLaunchParams, miniApp, useSignal } from '@telegram-apps/sdk-react';
 import { AppRoot } from '@telegram-apps/telegram-ui';
-import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
-import { init } from '@/init.ts';
-
-// Configure all application dependencies.
-console.warn('Location pathname', window.location.pathname);
-
-if (!window.location.pathname.startsWith(Pages.ADMIN)) init(retrieveLaunchParams().startParam === 'debug' || import.meta.env.DEV);
+import FriendInvitationDialog from '../Friends/FriendInvitationDialog';
 
 interface StyledBottomNavigationActionProps {
   selected?: boolean;
@@ -52,6 +46,16 @@ const Layout: FC = () => {
   const location = useLocation();
   const lp = useLaunchParams();
   const isDark = useSignal(miniApp.isDark);
+  const invitationToken = lp.startParam;
+  console.warn('invitationToken', invitationToken);
+
+  const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
+
+  useEffect(() => {
+    if (invitationToken && sessionStorage.getItem('handledInvitation') !== invitationToken) {
+      setOpenInvitationDialog(true);
+    }
+  }, [invitationToken]);
 
   const { isLoading } = useUserData();
 
@@ -65,6 +69,11 @@ const Layout: FC = () => {
       platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
     >
       <GlobalSnackbar />
+      <FriendInvitationDialog
+        open={openInvitationDialog}
+        onClose={() => setOpenInvitationDialog(false)}
+        invitationToken={invitationToken}
+      />
       <Box width="100%" height="1000px" maxHeight="85vh">
         <Outlet />
       </Box>

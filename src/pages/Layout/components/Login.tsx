@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useLoginMutation } from '@/api/authApi';
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 
 const Login = () => {
   const navigate = useNavigate();

@@ -12,7 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import Loading from '@/components/Loading';
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 import useAdminData from '@/hooks/useAdminData';
 import GlobalSnackbar from '@/components/GlobalSnackbar';
 

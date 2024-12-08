@@ -9,7 +9,7 @@ import { Button } from '@mui/material';
 import { useFormik } from 'formik';
 import { useCreateUserMutation, useLazySearchUsersQuery, User } from '@/api/userApi';
 import * as yup from 'yup';
-import { FormikAction } from '@/constants/enums';
+import { FormikAction } from '@/constants';
 import useInfiniteScroll, { UseLazyQuery } from '@/hooks/useInfiniteScroll';
 import moment from 'moment';
 import { debounce, get } from 'lodash';
@@ -152,7 +152,7 @@ const AdminUsers = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data,
+    data: data || [],
     createDisplayMode: 'row',
     editDisplayMode: 'row',
     enableEditing: false,

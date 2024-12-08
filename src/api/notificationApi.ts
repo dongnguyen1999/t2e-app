@@ -14,6 +14,7 @@ export type Notification = {
   title: string;
   body: string;
   status: number;
+  type: number;
   created_at: string;
   updated_at: string;
 };
@@ -28,6 +29,12 @@ export const notificationApi = createApi({
   reducerPath: 'notificationApi',
   baseQuery,
   endpoints: builder => ({
+    getNotificationById: builder.query<Notification, string>({
+      query: id => ({
+        url: '/notification',
+        params: { id },
+      }),
+    }),
     getNotifications: builder.query<GetNotificationsResponse, GetNotificationsPayload>({
       query: payload => ({
         url: '/notification',
@@ -40,4 +47,4 @@ export const notificationApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useLazyGetNotificationsQuery, useGetNotificationsQuery } = notificationApi;
+export const { useLazyGetNotificationsQuery, useGetNotificationsQuery, useGetNotificationByIdQuery } = notificationApi;

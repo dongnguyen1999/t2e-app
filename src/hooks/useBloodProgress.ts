@@ -6,7 +6,7 @@ import BloodBagDraining1 from '@/assets/images/blood-bag-draining1.svg?react';
 import BloodBagDraining2 from '@/assets/images/blood-bag-draining2.svg?react';
 import BloodBagDraining3 from '@/assets/images/blood-bag-draining3.svg?react';
 import BloodBagSpoiled from '@/assets/images/blood-bag-spoiled.svg?react';
-import { BloodStatus } from '@/constants/enums';
+import { BloodStatus } from '@/constants';
 import { round } from 'lodash';
 
 const useBloodProgress = (status: BloodStatus, progress: number) => {

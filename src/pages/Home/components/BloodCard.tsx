@@ -6,7 +6,7 @@ import BloodProgressBar from './BloodProgressBar';
 import ClaimButton from './ClaimButton';
 import useBloodProgress from '@/hooks/useBloodProgress';
 import { CountdownContext } from '..';
-import { BloodStatus } from '@/constants/enums';
+import { BloodStatus } from '@/constants';
 import { round } from 'lodash';
 
 const BloodCard: FC = () => {

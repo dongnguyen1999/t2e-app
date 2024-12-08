@@ -1,4 +1,4 @@
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 import { apiProxy } from '@/utils/proxy';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 

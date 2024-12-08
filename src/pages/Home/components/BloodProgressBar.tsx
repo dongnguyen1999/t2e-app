@@ -6,7 +6,7 @@ import { CountdownContext } from '..';
 import useBloodProgress from '@/hooks/useBloodProgress';
 import useBloodStatus from '@/hooks/useBloodStatus';
 import { get } from 'lodash';
-import { BloodStatus } from '@/constants/enums';
+import { BloodStatus } from '@/constants';
 
 const BloodProgressBar: FC = () => {
   const theme = useTheme();

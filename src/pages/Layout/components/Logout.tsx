@@ -1,5 +1,5 @@
 import Loading from '@/components/Loading';
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

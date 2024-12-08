@@ -37,8 +37,15 @@ type GetUsersResponse = {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery,
-  tagTypes: ['Users'],
+  tagTypes: ['Users', 'User'],
   endpoints: builder => ({
+    getUserById: builder.query<User, string>({
+      query: id => ({
+        url: '/user',
+        params: { id },
+      }),
+      providesTags: ['User'],
+    }),
     getAllUsers: builder.query<GetUsersResponse, GetUsersPayload>({
       query: payload => ({
         url: '/user',
@@ -71,4 +78,4 @@ export const userApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery, useLazySearchUsersQuery, useCreateUserMutation } = userApi;
+export const { useGetAllUsersQuery, useLazySearchUsersQuery, useCreateUserMutation, useGetUserByIdQuery } = userApi;

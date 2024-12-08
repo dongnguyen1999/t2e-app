@@ -16,6 +16,11 @@ type CreateFriendInvitationPayload = {
   message: string;
 }
 
+type UpdateFriendInvitationPayload = {
+  id: string;
+  status: number;
+}
+
 export type Friend = {
   id: string;
   first_name: string;
@@ -62,9 +67,17 @@ export const friendApi = createApi({
       }),
       invalidatesTags: ['Friends'],
     }),
+    updateFriendInvitation: builder.mutation<void, UpdateFriendInvitationPayload>({
+      query: payload => ({
+        url: '/friend',
+        method: 'PUT',
+        body: payload,
+      }),
+      invalidatesTags: ['Friends'],
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useLazyGetFriendsQuery, useLazySearchFriendsQuery, useCreateFriendInvatationMutation } = friendApi;
+export const { useLazyGetFriendsQuery, useLazySearchFriendsQuery, useCreateFriendInvatationMutation, useUpdateFriendInvitationMutation } = friendApi;

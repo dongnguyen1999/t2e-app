@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 import { closeMiniApp, initData } from '@telegram-apps/sdk-react';
 import { useNavigate } from 'react-router-dom';
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 import { createHash } from '@/utils/dataUtils';
 
 const Forbidden: FC = () => {

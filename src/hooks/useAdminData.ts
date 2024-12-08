@@ -2,7 +2,7 @@ import { AuthUser } from '@/api/authApi';
 import { useGetNotificationsQuery } from '@/api/notificationApi';
 import { isEmpty } from 'lodash';
 import { useNavigate } from 'react-router-dom';
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 
 const useAdminData = () => {
   const navigate = useNavigate();

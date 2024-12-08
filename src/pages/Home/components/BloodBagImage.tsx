@@ -7,7 +7,7 @@ import { CountdownContext } from '..';
 import useBloodStatus from '@/hooks/useBloodStatus';
 import { zeroPad } from 'react-countdown';
 import HourglassIcon from '@/assets/icons/icon-hourglass.svg?react';
-import { BloodStatus } from '@/constants/enums';
+import { BloodStatus } from '@/constants';
 
 const BloodBagImage: FC = () => {
   const { status } = useBloodStatus();

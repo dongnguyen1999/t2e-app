@@ -7,11 +7,11 @@ export type UseLazyQuery = () => [TypedLazyQueryTrigger<unknown, unknown, typeof
 
 const useInfiniteScroll = <T>(useLazyQuery: UseLazyQuery, queryParams: {[key: string]: unknown}, key: string) => {
   const [fetchData, { isFetching, data }] = useLazyQuery();
-  const [mergedData, setMergedData] = useState<T[]>([]);
+  const [mergedData, setMergedData] = useState<T[] | undefined>();
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMergedData([]);
+    setMergedData(undefined);
     fetchData(queryParams);
   }, [JSON.stringify(queryParams)]);
 
@@ -19,7 +19,7 @@ const useInfiniteScroll = <T>(useLazyQuery: UseLazyQuery, queryParams: {[key: st
     if (data && get(data, key)) {
       setMergedData(prevData => {
         const newData = get(data, key);
-        const updatedData = [...prevData, ...newData];
+        const updatedData = [...prevData || [], ...newData];
         const uniqueData = uniqBy(updatedData.reverse(), 'id').reverse();
         return uniqueData;
       });

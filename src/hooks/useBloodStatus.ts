@@ -1,7 +1,7 @@
 import moment from 'moment';
 import useUserData from './useUserData';
 import { useCallback, useMemo } from 'react';
-import { BloodStatus } from '@/constants/enums';
+import { BloodStatus } from '@/constants';
 import { floor } from 'lodash';
 
 const useBloodStatus = () => {

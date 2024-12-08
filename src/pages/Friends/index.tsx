@@ -4,7 +4,7 @@ import { useMemo, useState, type FC } from 'react';
 import FriendHeader from './components/FriendHeader';
 import Avatar from '@/assets/images/avatar2.svg?react';
 import FriendList from './components/FriendList';
-import { isEmpty } from 'lodash';
+import { isEmpty, isNil } from 'lodash';
 import EmptyFriendList from './components/EmptyFriendList';
 import AddFriendDrawer from './components/AddFriendDrawer';
 import useInfiniteScroll, { UseLazyQuery } from '@/hooks/useInfiniteScroll';
@@ -12,6 +12,12 @@ import { Friend, useLazyGetFriendsQuery } from '@/api/friendApi';
 import useUserData from '@/hooks/useUserData';
 import moment from 'moment';
 import { base64Encode } from '@/utils/dataUtils';
+
+export type FriendInvitationData = {
+  id: string;
+  name: string;
+  expiredDate: string;
+}
 
 const headerData = {
   avatar: <Avatar />,
@@ -34,7 +40,7 @@ const Friends: FC = () => {
       id: user?.id || '',
       name: `${user?.first_name} ${user?.last_name}`,
       expiredDate: moment().add(10, 'minutes').toISOString()
-    };
+    } as FriendInvitationData;
     const inviteLink = `${TELEGRAM_APP_URL}?startapp=${base64Encode(inviteAppPayload)}`;
     return inviteLink;
   };
@@ -57,12 +63,12 @@ const Friends: FC = () => {
         <NotificationBell />
       </Stack>
       <Stack flex={1} gap={8} p={5}>
-        {isEmpty(data) ? <EmptyFriendList
+        {(isEmpty(data) && !isNil(data)) ? <EmptyFriendList
           inviteLink={inviteLink}
           handleAddFriend={() => setOpenAddFriend(true)}
         /> :
           <FriendList
-            data={data}
+            data={data || []}
             listRef={listRef}
             inviteLink={inviteLink}
             handleAddFriend={() => setOpenAddFriend(true)}

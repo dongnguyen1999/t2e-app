@@ -11,7 +11,7 @@ import Login from '@/pages/Layout/components/Login';
 import Logout from '@/pages/Layout/components/Logout';
 import AdminMissions from '@/pages/AdminMissions';
 import AdminUsers from '@/pages/AdminUser';
-import { Pages } from '@/constants/enums';
+import { Pages } from '@/constants';
 
 export function App() {
 
@@ -36,7 +36,7 @@ export function App() {
             <Route path="*" element={<Navigate to={Pages.ADMIN_USERS} />} />
           </Route>
           <Route path="forbidden" element={<Forbidden />} />
-          <Route path="*" element={<Navigate to={Pages.HOME} />} />
+          <Route path="*" element={<Navigate to={Pages.ADMIN_USERS} />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

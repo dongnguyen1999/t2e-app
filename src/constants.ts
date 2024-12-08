@@ -11,6 +11,7 @@ export enum Pages {
   ADMIN = '/admin',
   LOGIN = '/login',
   LOGOUT = '/logout',
+  FRIEND_INVITATION = '/app/friend-invitation',
 }
 
 export enum MissionFilterType {
@@ -28,3 +29,5 @@ export enum FormikAction {
   CREATE = 'CREATE',
   UPDATE = 'UPDATE',
 }
+
+export const DIRECT_URL_INVITATION_MESSAGE = 'InvitationUrl';

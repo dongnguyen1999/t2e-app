@@ -37,7 +37,7 @@ import { useFormik } from 'formik';
 // ];
 
 import * as yup from 'yup';
-import { FormikAction } from '@/constants/enums';
+import { FormikAction } from '@/constants';
 import { Mission, useCreateMissionMutation, useDeleteMissionMutation, useLazyGetMissionsQuery, useUpdateMissionMutation } from '@/api/missionApi';
 import useInfiniteScroll, { UseLazyQuery } from '@/hooks/useInfiniteScroll';
 import { debounce, get } from 'lodash';
@@ -277,7 +277,7 @@ const AdminMissions = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data,
+    data: data || [],
     createDisplayMode: 'row', // ('modal', and 'custom' are also available)
     editDisplayMode: 'row', // ('modal', 'cell', 'table', and 'custom' are also available)
     enableEditing: true,

@@ -36,7 +36,7 @@ const InviteFriendList: FC<Props> = ({ searchKey, selectedFriends, setSelectedFr
     <Box width="100%" height={2}>
       {isFetching && <LinearProgress />}
     </Box>
-    {data.map(friend => <Grid2 key={friend.id} size={4}>
+    {data?.map(friend => <Grid2 key={friend.id} size={4}>
       <FriendCard
         avatar={<FriendAvatar />}
         name={`${friend.first_name} ${friend.last_name}`}

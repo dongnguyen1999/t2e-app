@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { FC } from 'react';
 import MissionFilterItem from './MissionFilterItem';
-import { MissionFilterType } from '@/constants/enums';
+import { MissionFilterType } from '@/constants';
 import useUserData from '@/hooks/useUserData';
 // import ConnectWalletButton from "./ConnectWalletButton";
 

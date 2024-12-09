@@ -9,6 +9,7 @@ import {
 import Logo from '@/assets/icons/logo.svg?react';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import Loading from '@/components/Loading';
@@ -58,6 +59,14 @@ const AdminLayout: FC = () => {
             }
           }}
         >
+          <MenuItem
+            component={<Link to={Pages.DASHBOARD} />}
+            icon={<DashboardIcon color="primary" />}
+            active={pathname === Pages.DASHBOARD}
+            disabled={pathname === Pages.DASHBOARD}
+          >
+            <Typography variant="body-14-regular">Dashboard</Typography>
+          </MenuItem>
           <MenuItem
             component={<Link to={Pages.ADMIN_USERS} />}
             icon={<AccountCircleIcon color="primary" />}

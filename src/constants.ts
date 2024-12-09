@@ -12,6 +12,7 @@ export enum Pages {
   LOGIN = '/login',
   LOGOUT = '/logout',
   FRIEND_INVITATION = '/app/friend-invitation',
+  DASHBOARD = '/admin/dashboard',
 }
 
 export enum MissionFilterType {

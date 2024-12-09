@@ -39,6 +39,16 @@ export type GetMissionsResponse = {
   continuationToken: string;
 }
 
+type GetMissionStatsPayload = {
+  fromDate?: string,
+  toDate?: string,
+}
+
+type GetMissionStatsResponse = {
+  date: string;
+  number_of_mission: number;
+}
+
 // Define a service using a base URL and expected endpoints
 export const missionApi = createApi({
   reducerPath: 'missionApi',
@@ -85,9 +95,16 @@ export const missionApi = createApi({
       }),
       invalidatesTags: ['Missions'],
     }),
+    getMissionStats: builder.query<GetMissionStatsResponse[], GetMissionStatsPayload>({
+      query: payload => ({
+        url: '/mission/stats',
+        params: payload,
+      }),
+      transformResponse: (response: { data: GetMissionStatsResponse[] }) => response.data,
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useClaimMissionMutation, useLazyGetMissionsQuery, useCreateMissionMutation, useUpdateMissionMutation, useDeleteMissionMutation } = missionApi;
+export const { useClaimMissionMutation, useLazyGetMissionsQuery, useCreateMissionMutation, useUpdateMissionMutation, useDeleteMissionMutation, useGetMissionStatsQuery } = missionApi;

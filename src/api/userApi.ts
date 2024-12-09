@@ -33,6 +33,16 @@ type GetUsersResponse = {
   continuationToken: string;
 }
 
+type GetUserStatsPayload = {
+  fromDate?: string,
+  toDate?: string,
+}
+
+type GetUserStatsResponse = {
+  date: string;
+  number_of_user: number;
+}
+
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -73,9 +83,16 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
+    getUserStats: builder.query<GetUserStatsResponse[], GetUserStatsPayload>({
+      query: payload => ({
+        url: '/user/stats',
+        params: payload,
+      }),
+      transformResponse: (response: { data: GetUserStatsResponse[] }) => response.data,
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery, useLazySearchUsersQuery, useCreateUserMutation, useGetUserByIdQuery } = userApi;
+export const { useGetAllUsersQuery, useLazySearchUsersQuery, useCreateUserMutation, useGetUserByIdQuery, useGetUserStatsQuery } = userApi;

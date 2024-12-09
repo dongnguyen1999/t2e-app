@@ -9,9 +9,10 @@ import Forbidden from '@/pages/Layout/components/Forbidden';
 import AdminLayout from '@/pages/Layout/AdminLayout';
 import Login from '@/pages/Layout/components/Login';
 import Logout from '@/pages/Layout/components/Logout';
-import AdminMissions from '@/pages/AdminMissions';
-import AdminUsers from '@/pages/AdminUser';
 import { Pages } from '@/constants';
+import AdminUsers from '@/pages/admin/AdminUsers';
+import AdminMissions from '@/pages/admin/AdminMissions';
+import AdminDashboard from '@/pages/admin/AdminDashboard';
 
 export function App() {
 
@@ -30,13 +31,14 @@ export function App() {
           <Route path="login" element={<Login />} />
           <Route path="logout" element={<Logout />} />
           <Route path="admin" element={<AdminLayout />}>
-            <Route index element={<AdminUsers />} />
+            <Route index element={<Navigate to={Pages.DASHBOARD} />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="missions" element={<AdminMissions />} />
-            <Route path="*" element={<Navigate to={Pages.ADMIN_USERS} />} />
+            <Route path="*" element={<Navigate to={Pages.DASHBOARD} />} />
           </Route>
           <Route path="forbidden" element={<Forbidden />} />
-          <Route path="*" element={<Navigate to={Pages.ADMIN_USERS} />} />
+          <Route path="*" element={<Navigate to={Pages.LOGIN} />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
